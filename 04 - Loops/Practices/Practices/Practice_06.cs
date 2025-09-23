@@ -2,16 +2,16 @@
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Enter a positive integer: ");
+        Console.Write("Enter a positive integer: ");
         int k = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("divisors of " + k + " are: ");
-        for (int i = 1; i <= k / 2; ++i)
+        Console.Write("divisors of " + k + " are: ");
+        for (int i = 1; i * i <= k; ++i)
         {
             if (k % i == 0)
             {
                 Console.Write(i + " ");
+                if(i != k / i) Console.Write(k / i + " "); // to avoid printing the square root twice if k is a perfect square
             }
         }
-        Console.WriteLine(k);
     }
 }
