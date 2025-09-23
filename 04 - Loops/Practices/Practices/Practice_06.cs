@@ -1,6 +1,6 @@
 ﻿public class Practice_06
 {
-    public static void Main(string[] args)
+    public static void Main3(string[] args)
     {
         Console.Write("Enter a positive integer: ");
         int k = Convert.ToInt32(Console.ReadLine());
