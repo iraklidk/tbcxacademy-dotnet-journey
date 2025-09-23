@@ -1,6 +1,6 @@
 ﻿public class Practice_05
 {
-    public static void Main(string[] args)
+    public static void Main5(string[] args)
     {
         Console.WriteLine("Enter your day of birth: ");
         int d = Convert.ToInt32(Console.ReadLine());
