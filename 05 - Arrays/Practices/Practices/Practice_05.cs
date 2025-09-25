@@ -2,7 +2,6 @@
 {
     public static void Main2(string[] args)
     {
-        // 05 
         Console.Write("Enter array size: ");
         int size = Convert.ToInt32(Console.ReadLine());
         int[] arr = new int[size];

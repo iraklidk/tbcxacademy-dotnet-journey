@@ -2,7 +2,6 @@
 {
     public static void Main3(string[] args)
     {
-        // 05 
         Console.Write("Enter array row size: ");
         int row = Convert.ToInt32(Console.ReadLine());
         Console.Write("Enter array column size: ");
