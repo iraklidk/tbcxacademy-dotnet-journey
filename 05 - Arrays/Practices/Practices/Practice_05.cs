@@ -1,6 +1,6 @@
 ﻿public class Practice_05
 {
-    public static void Main(string[] args)
+    public static void Main2(string[] args)
     {
         // 05 
         Console.Write("Enter array size: ");
