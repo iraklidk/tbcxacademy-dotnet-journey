@@ -1,6 +1,6 @@
 ﻿public class Practice_07
 {
-    public static void Main(string[] args)
+    public static void Main4(string[] args)
     {
         Console.Write("Enter array row size: ");
         int row = Convert.ToInt32(Console.ReadLine());
