@@ -1,4 +1,4 @@
-﻿public class Practice_03_04
+﻿public class Practice_03_04_05
 {
     //03
 
@@ -39,12 +39,34 @@
         return sum / arr.Length;
     }
 
-    public static void Main(string[] args)
+    // 05
+
+    static void getFact(int[] arr, int n)
+    {
+        foreach(int num in arr)
+        {
+            if (num == n)
+            {
+                Console.WriteLine("Factorial of " + n + " is " + fact(n));
+                return;
+            }
+        }
+        Console.WriteLine("Number not found in the array");
+    }
+
+    static int fact(int n)
+    {
+        if (n == 0) return 1;
+        return n * fact(n - 1);
+    }
+
+    public static void Main3(string[] args)
     {
         int[] arr = fillArr();
         int[] mnmx = minMax(arr);
         Console.WriteLine("The minimum number in the array is " + mnmx[0] + "\n" + "The maximum number in the array is " + mnmx[1]);
         double avg = calculateAvg(arr);
         Console.WriteLine("Arithmetic average of array is " + avg);
+        getFact(arr, 12);
     }
 }
