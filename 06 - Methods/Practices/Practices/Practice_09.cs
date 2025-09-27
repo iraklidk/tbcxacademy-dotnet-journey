@@ -10,9 +10,10 @@
         return res;
     }
 
-    public static void Main7(string[] args)
+    public static void Main(string[] args)
     {
         int [] arr = new int[] { 1, 3, 4, 15, 13, 23, 98 };
         Console.WriteLine("The product of array elements is: " + prod(arr));
+        Console.WriteLine("The product of array elements is: " + prod(1, 3, 4, 15, 13, 23, 98, 10));
     }
 }
