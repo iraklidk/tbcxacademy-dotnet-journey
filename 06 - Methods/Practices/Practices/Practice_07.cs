@@ -54,7 +54,7 @@
         }
     }
 
-    public static void Main(string[] args)
+    public static void Main5(string[] args)
     {
         int[,] arr1 = fillArr();
         int[,] arr2 = fillArr();
