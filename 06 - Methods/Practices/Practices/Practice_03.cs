@@ -1,5 +1,6 @@
-﻿public class Practice_03
+﻿public class Practice_03_04
 {
+    //03
 
     static int[] fillArr()
     {
@@ -26,10 +27,24 @@
         return new int[] { mn, mx };
     }
 
+    // 04
+
+    static double calculateAvg(int[] arr)
+    {
+        double sum = 0;
+        foreach (int num in arr)
+        {
+            sum += num;
+        }
+        return sum / arr.Length;
+    }
+
     public static void Main(string[] args)
     {
         int[] arr = fillArr();
         int[] mnmx = minMax(arr);
         Console.WriteLine("The minimum number in the array is " + mnmx[0] + "\n" + "The maximum number in the array is " + mnmx[1]);
+        double avg = calculateAvg(arr);
+        Console.WriteLine("Arithmetic average of array is " + avg);
     }
 }
