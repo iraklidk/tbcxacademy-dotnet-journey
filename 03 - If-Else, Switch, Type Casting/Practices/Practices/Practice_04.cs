@@ -3,7 +3,7 @@
     public static void Main4(string[] args)
     {
         Console.WriteLine("Enter your birth year :");
-        int y = Convert.ToInt32(Console.ReadLine());  
+        int userInput = Convert.ToInt32(Console.ReadLine());  
         switch(y % 12)
         {
             case 0: Console.WriteLine(y + " was Monkey year"); break;
