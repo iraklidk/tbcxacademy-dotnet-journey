@@ -3,7 +3,7 @@
     public static void Main5(string[] args)
     {
         Console.WriteLine("Enter your day of birth: ");
-        int d = Convert.ToInt32(Console.ReadLine());
+        int dayOfBirth = Convert.ToInt32(Console.ReadLine());
         Console.WriteLine("Enter your month of birth: ");
         string month = Console.ReadLine();
 
