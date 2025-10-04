@@ -4,7 +4,7 @@
                                             // Same applies to all cs files.
     {
         Console.WriteLine("Enter integer number :");
-        int k = Convert.ToInt32(Console.ReadLine());
+        int userInput = Convert.ToInt32(Console.ReadLine());
         Console.WriteLine((k & 1) == 1 ? "Entered number " + k + " is odd" : "Entered number " + k + " is even");
     }
 }
