@@ -1,7 +1,7 @@
 ﻿public class Practice_01
 {
 
-    static int valueAt(int[] arr, int idx)
+    static int ValueAt(int[] arr, int idx)
     {
         if (idx < arr.Length && idx > -1) return arr[idx];
         return -1;
