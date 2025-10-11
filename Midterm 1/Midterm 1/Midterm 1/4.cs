@@ -9,7 +9,6 @@ public class Midterm_01_04
         foreach (var file in files)
         {
             Console.WriteLine(file);
-            Console.WriteLine("daibechdaaa");
         }
 
         var dirs = Directory.GetDirectories(input);
@@ -30,7 +29,11 @@ public class Midterm_01_04
         while(input != "exit")
         {
             input = Console.ReadLine();
-            if (input == "exit") break;
+            if (input == "exit")
+            {
+                Console.WriteLine("ENDPOINTTTTTTTTTTTTTTT OF PROGRAM, BYE <3");
+                break;
+            }
 
             if (!Directory.Exists(input)) Console.WriteLine($"The directory {input} does not exist!");
 
