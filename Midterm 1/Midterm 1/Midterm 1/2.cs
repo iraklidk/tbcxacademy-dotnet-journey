@@ -31,7 +31,7 @@ public class Midterm_01_02
         return true;
     }
 
-    public static int sum(int[] arr)
+    public static int SumOfArray(int[] arr)
     {
         int total = 0;
 
@@ -42,9 +42,9 @@ public class Midterm_01_02
 
     public static bool CanBeProgression2(int[] arr)
     {
-        double total = sum(arr);
+        double total = SumOfArray(arr);
         int n = arr.Length;
-        int[] mnmx = minmax(arr);
+        int[] mnmx = GetMinMax(arr);
         int mn = mnmx[1];
         int mx = mnmx[0];
 
@@ -53,7 +53,7 @@ public class Midterm_01_02
     }
 
 
-    public static int[] minmax(int[] arr)
+    public static int[] GetMinMax(int[] arr)
     {
         int mx = int.MinValue;
         int mn = int.MaxValue;

@@ -3,7 +3,7 @@
 public class Midterm_01_03
 {
     
-    static bool checkVertical(int[,] table, int col, bool turn)
+    static bool CheckVertical(int[,] table, int col, bool turn)
     {
         int nottobe = Convert.ToByte(turn) == 0 ? -1 : 1;
         int k = Convert.ToByte(turn);
@@ -13,7 +13,7 @@ public class Midterm_01_03
         return true;
     }
 
-    static bool checkHorizontal(int[,] table, int row, bool turn)
+    static bool CheckHorizontal(int[,] table, int row, bool turn)
     {
         int nottobe = Convert.ToByte(turn) == 0 ? -1 : 1;
         int k = Convert.ToByte(turn);
@@ -23,7 +23,7 @@ public class Midterm_01_03
         return true;
     }
 
-    static bool checkDiagonal(int[,] table, int row, int col, bool turn)
+    static bool CheckDiagonal(int[,] table, int row, int col, bool turn)
     {
         int nottobe = Convert.ToByte(turn) == 0 ? -1 : 1;
         int k = Convert.ToByte(turn);
@@ -83,20 +83,20 @@ public class Midterm_01_03
             ++count;
             turn = !turn;
 
-            if (checkVertical(table, col, turn))
+            if (CheckVertical(table, col, turn))
             {
                 Console.WriteLine(turn == false ?
                     "moigoo mrgvalmaaa vertikali" : "moigo iqsikma xD sheavso vertikali");
                 break;
             }
 
-            if (checkHorizontal(table, row, turn)) {
+            if (CheckHorizontal(table, row, turn)) {
                 Console.WriteLine(turn == false ?
                     "moigoo mrgvalmaaa sheavso horizontali" : "moigo iqsikma xD sheavso horizontali");
                 break;
             }
 
-            if (checkDiagonal(table, row, col, turn))
+            if (CheckDiagonal(table, row, col, turn))
             {
                 Console.WriteLine(turn == false ?
                     "moigoo mrgvalmaaa sheavso diagonali" : "moigo iqsikma sheavso diagonali xD");
