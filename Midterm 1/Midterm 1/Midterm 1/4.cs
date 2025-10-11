@@ -3,7 +3,7 @@
 public class Midterm_01_04
 {
 
-    static void dfs(string input)
+    static void dfs(string input) // execute depth first search
     {
         var files = Directory.GetFiles(input);
         foreach (var file in files)

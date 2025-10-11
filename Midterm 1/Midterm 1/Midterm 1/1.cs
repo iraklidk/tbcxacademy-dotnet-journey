@@ -2,7 +2,7 @@
 
 public class Midterm_01_01
 {
-    public static void solve(int[] arr, int target)
+    public static void solve(int[] arr, int target) // execute two pointer algorithm
     {
         int left = 0, right = arr.Length - 1;
         while(left < right)
