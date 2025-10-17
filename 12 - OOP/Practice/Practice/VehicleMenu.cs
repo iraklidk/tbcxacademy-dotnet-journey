@@ -28,7 +28,7 @@
             int choice = int.Parse(Console.ReadLine() ?? "0");
             manufacturerName = (Manufacturer)choice;
 
-            Console.WriteLine();
+            Console.WriteLine(); //
         }
 
         public static void ShowInfo(TransportType type, int specificChoice)
