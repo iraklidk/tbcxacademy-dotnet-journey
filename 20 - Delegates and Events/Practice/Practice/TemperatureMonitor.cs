@@ -16,11 +16,11 @@
             set
             {
                 _temperature = value;
-                CheckTemperature(_temperature);
+                PublishTemperature(_temperature);
             }
         }
 
-        public void CheckTemperature(double temp)
+        public void PublishTemperature(double temp)
         {
             // trigger event if temp < 0 or temp > 40
             if (temp < 0 || temp > 40)
