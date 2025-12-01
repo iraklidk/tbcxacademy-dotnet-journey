@@ -64,7 +64,7 @@ public class Multithreading1
         return true;
     }
 
-    static void Main1()
+    static void Main()
     {
         Console.Write("Enter the start of the range: ");
         int start = int.Parse(Console.ReadLine());

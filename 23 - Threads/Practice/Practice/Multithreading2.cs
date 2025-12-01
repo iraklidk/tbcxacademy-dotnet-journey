@@ -4,7 +4,7 @@
     static bool running = true;
     static object lockObj = new object();
 
-    static void Main()
+    static void Main8()
     {
         Thread timerThread = new Thread(TimerThread);
         Thread inputThread = new Thread(InputThread);
