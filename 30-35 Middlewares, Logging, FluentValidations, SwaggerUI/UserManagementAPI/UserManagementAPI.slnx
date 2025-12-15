@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/core/">
+    <Project Path="UserManagement.Domain/UserManagement.Domain.csproj" Id="250a8e15-76aa-4343-95e8-4304f71809e4" />
+  </Folder>
+  <Folder Name="/infrastructure/">
+    <Project Path="UserManagement.Infrastructure/UserManagement.Infrastructure.csproj" Id="76b79e58-c65b-4ac3-8b9b-7c28d9d9a0b5" />
+  </Folder>
+  <Folder Name="/presentation/">
+    <Project Path="UserManagementAPI/UserManagementAPI.csproj" />
+  </Folder>
+</Solution>

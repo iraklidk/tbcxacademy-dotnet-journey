@@ -3,7 +3,7 @@
 
     public delegate decimal MathOperation(decimal a, decimal b);
 
-    static void Main2()
+    static void Main()
     {
         MathOperation mathDelegate = Add;
         mathDelegate += Subtract;

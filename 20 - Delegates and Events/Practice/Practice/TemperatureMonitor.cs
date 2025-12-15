@@ -38,7 +38,7 @@
         }
     }
 
-    static void Main()
+    static void Main111()
     {
         var monitor = new TemperatureMonitor();
         var alert = new TemperatureAlert();
