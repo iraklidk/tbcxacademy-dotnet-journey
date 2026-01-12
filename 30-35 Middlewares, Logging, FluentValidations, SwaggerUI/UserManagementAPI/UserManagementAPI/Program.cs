@@ -1,8 +1,8 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using System;
 using System.Reflection;
 using UserManagementAPI.infrastructure.middlewares;
-using UserManagementAPI.infrastructure.validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +16,12 @@ builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddLocalization(options => options.ResourcesPath = "infrastructure/localization");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddScoped<ISmsService, SmsService>();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
