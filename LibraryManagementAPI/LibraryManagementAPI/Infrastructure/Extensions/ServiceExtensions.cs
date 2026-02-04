@@ -22,6 +22,7 @@ namespace LibraryManagement.Infrastructure.Extensions
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IPatronService, PatronService>();
             services.AddScoped<IBorrowRecordService, BorrowRecordService>();
+            
         }
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
@@ -29,7 +30,6 @@ namespace LibraryManagement.Infrastructure.Extensions
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IPatronRepository, PatronRepository>();
             services.AddScoped<IBorrowRecordRepository, BorrowRecordRepository>();
-
             return services;
         }
 
