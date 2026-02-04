@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="LibraryManagement.Application/LibraryManagement.Application.csproj" Id="a9447c20-b51c-4db6-a72f-74a4abc73214" />
+    <Project Path="LibraryManagement.Domain/LibraryManagement.Domain.csproj" Id="efa0b2a6-0a93-4d55-a170-0b665623e654" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="LibraryManagement.Infrastructure/LibraryManagement.Infrastructure.csproj" Id="5b243de0-30f5-47d4-b1c7-b88b48c0b27f" />
+    <Project Path="LibraryManagement.Persistence/LibraryManagement.Persistence.csproj" Id="c048168b-1806-4988-b571-3062ea1c4a49" />
+  </Folder>
+  <Folder Name="/Presentation/">
+    <Project Path="LibraryManagementAPI/LibraryManagementAPI.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="LibraryManagement.UnitTests/UnitTests.csproj" />
+  </Folder>
+</Solution>
