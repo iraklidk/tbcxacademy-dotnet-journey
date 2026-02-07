@@ -1,5 +1,7 @@
 ﻿using Asp.Versioning;
 using LibraryManagement.Application.DTOs;
+using LibraryManagementAPI.DTOs.BorrowRecords;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagement.API.Controllers
@@ -57,14 +59,15 @@ namespace LibraryManagement.API.Controllers
         /// <summary>
         /// Create a new borrow record.
         /// </summary>
-        /// <param name="dto">Borrow record creation data.</param>
+        /// <param name="requestModel">Borrow record creation data.</param>
         /// <param name="ct">Cancellation token.</param>
         /// <returns>The created borrow record.</returns>
         [HttpPost]
         [ProducesResponseType(typeof(object), 201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Create(CreateBorrowRecordDto dto, CancellationToken ct)
+        public async Task<IActionResult> Create(CreateBorrowRecordRequest requestModel, CancellationToken ct)
         {
+            var dto = requestModel.Adapt<CreateBorrowRecordDto>();
             var result = await _borrowRecordService.CreateAsync(dto, ct);
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
@@ -73,14 +76,15 @@ namespace LibraryManagement.API.Controllers
         /// Mark a borrowed book as returned.
         /// </summary>
         /// <param name="id">Borrow record ID.</param>
-        /// <param name="dto">Return details.</param>
+        /// <param name="requestModel">Return details.</param>
         /// <param name="ct">Cancellation token.</param>
         [HttpPut("{id:int}/return")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> ReturnBook(int id, ReturnBorrowRecordDto dto, CancellationToken ct)
+        public async Task<IActionResult> ReturnBook(int id, ReturnBorrowRecordRequest requestModel, CancellationToken ct)
         {
+            var dto = requestModel.Adapt<ReturnBorrowRecordDto>();
             await _borrowRecordService.ReturnAsync(id, dto, ct);
             return NoContent();
         }

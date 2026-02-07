@@ -20,11 +20,11 @@ namespace LibraryManagementAPI.Infrastructure.SwaggerExamples
     }
 
     public class ReturnBorrowRecordRequestExample
-        : IExamplesProvider<ReturnBorrowRecordDto>
+        : IExamplesProvider<ReturnBorrowRecordRequest>
     {
-        public ReturnBorrowRecordDto GetExamples()
+        public ReturnBorrowRecordRequest GetExamples()
         {
-            return new ReturnBorrowRecordDto
+            return new ReturnBorrowRecordRequest
             {
                 ReturnDate = DateTime.UtcNow,
             };
