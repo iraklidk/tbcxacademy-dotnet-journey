@@ -6,6 +6,8 @@ using LibraryManagement.Application.Services.Implementations;
 using Moq;
 using Xunit;
 
+namespace UnitTests.Services;
+
 public class AuthorServiceTests
 {
     private readonly Mock<IAuthorRepository> _repoMock;

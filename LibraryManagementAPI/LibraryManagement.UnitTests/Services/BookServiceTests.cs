@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Moq;
 using Xunit;
 
+namespace UnitTests.Services;
+
 public class BookServiceTests
 {
     private readonly Mock<IBookRepository> _bookRepoMock;

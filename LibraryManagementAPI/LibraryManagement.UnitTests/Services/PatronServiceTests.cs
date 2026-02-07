@@ -6,6 +6,8 @@ using LibraryManagement.Application.Services.Implementations;
 using Moq;
 using Xunit;
 
+namespace UnitTests.Services;
+
 public class PatronServiceTests
 {
     private readonly Mock<IPatronRepository> _repoMock;

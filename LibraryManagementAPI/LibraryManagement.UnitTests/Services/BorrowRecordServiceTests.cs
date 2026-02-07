@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Moq;
 using Xunit;
 
+namespace UnitTests.Services;
+
 public class BorrowRecordServiceTests
 {
     private readonly Mock<IBorrowRecordRepository> _borrowRepoMock;
