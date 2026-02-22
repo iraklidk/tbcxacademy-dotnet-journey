@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Discounts.Persistence.Context;
+﻿using Domain.Entities;
 using Application.Interfaces.Repos;
-using Domain.Entities;
+using Discounts.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Discounts.Persistence.Repositories;
 
@@ -18,6 +18,6 @@ public class CouponRepository : BaseRepository<Coupon>, ICouponRepository
     public Task<List<Coupon>> GetCouponsByMerchantIdAsync(int merchantId, CancellationToken ct = default)
         => _context.Coupons.Include(c => c.Offer).Where(c => c.Offer.MerchantId == merchantId).ToListAsync(ct);
 
-    public Task<Coupon?> GetByCustomerAsync(int customerId, CancellationToken ct = default)
-        => _context.Coupons.Include(c => c.Customer).FirstOrDefaultAsync(c => c.CustomerId == customerId, ct);
+    public Task<List<Coupon?>> GetByCustomerAsync(int customerId, CancellationToken ct = default)
+        => _context.Coupons.Include(c => c.Customer).Where(c => c.CustomerId == customerId).ToListAsync(ct);
 }

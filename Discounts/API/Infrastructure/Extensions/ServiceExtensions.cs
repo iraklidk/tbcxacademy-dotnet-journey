@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.RateLimiting;
-using Swashbuckle.AspNetCore.Filters;
+﻿using Mapster;
 using System.Threading.RateLimiting;
-using Mapster;
+using Swashbuckle.AspNetCore.Filters;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 public static class ServiceExtensions
 {
@@ -51,5 +52,27 @@ public static class ServiceExtensions
                     ct).ConfigureAwait(false);
             };
         });
+    }
+
+    public static WebApplication AddHealthCheck(this WebApplication app)
+    {
+        app.MapHealthChecks("/health", new HealthCheckOptions
+        {
+            ResponseWriter = async (context, report) =>
+            {
+                context.Response.ContentType = "application/json";
+                var result = new
+                {
+                    status = report.Status.ToString(),
+                    checks = report.Entries.Select(entry => new {
+                        name = entry.Key,
+                        status = entry.Value.Status.ToString(),
+                        description = entry.Value.Description
+                    })
+                };
+                await context.Response.WriteAsJsonAsync(result).ConfigureAwait(false);
+            }
+        });
+        return app;
     }
 }

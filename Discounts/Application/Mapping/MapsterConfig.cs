@@ -1,34 +1,32 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
-using Application.DTOs.Merchant;
-using Application.DTOs.Offer;
-using Application.DTOs.User;
-using Persistence.Identity;
+﻿using Mapster;
 using Domain.Entities;
-using Mapster;
+using Persistence.Identity;
+using Application.DTOs.User;
+using Application.DTOs.Offer;
+using Application.DTOs.Merchant;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 public static class MapsterConfig
 {
     public static IServiceCollection RegisterMaps(this IServiceCollection services)
     {
-        TypeAdapterConfig<Offer, OfferDto>
-            .NewConfig()
+        TypeAdapterConfig<Offer, OfferDto>.NewConfig()
             .Map(dest => dest.ReservationsCount, src => src.Reservations.Count)
             .Map(dest => dest.MerchantName, src => src.Merchant!.Name)
             .Map(dest => dest.Category, src => src.Category!.Name);
 
-        TypeAdapterConfig<CreateOfferDto, Offer>
-            .NewConfig()
+        TypeAdapterConfig<CreateOfferDto, Offer>.NewConfig()
             .Ignore(dest => dest.Category)
             .Ignore(dest => dest.Updated)
             .Ignore(dest => dest.Created)
-            .Ignore(dest => dest.Id);
+            .Ignore(dest => dest.Id)
+            .Map(dest => dest.RemainingCoupons, src => src.TotalCoupons);
 
         TypeAdapterConfig<IdentityUser<int>, UserDto>.NewConfig()
             .Map(dest => dest.UserName, src => src.UserName ?? "Unknown");
 
-        TypeAdapterConfig<UpdateOfferDto, Offer>
-            .NewConfig()
+        TypeAdapterConfig<UpdateOfferDto, Offer>.NewConfig()
             .Ignore(dest => dest.Created);
 
         TypeAdapterConfig<Merchant, MerchantResponseDto>.NewConfig()
@@ -42,12 +40,10 @@ public static class MapsterConfig
             .Map(dest => dest.MerchantName, src => src.Merchant!.Name)
             .Map(dest => dest.Category, src => src.Category!.Name);
 
-        TypeAdapterConfig<UpdateOfferDto, Offer>
-            .NewConfig()
+        TypeAdapterConfig<UpdateOfferDto, Offer>.NewConfig()
             .Ignore(dest => dest.Created);
 
-        TypeAdapterConfig<User, UserDto>
-            .NewConfig()
+        TypeAdapterConfig<User, UserDto>.NewConfig()
             .Map(dest => dest.IsActive, src => src.IsActive);
 
         return services;

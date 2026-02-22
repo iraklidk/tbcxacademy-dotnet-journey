@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
 using Domain.Constants;
-using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Discounts.Infrastructure.Persistence.Configurations;
 
@@ -25,11 +25,6 @@ public class CouponConfiguration : IEntityTypeConfiguration<Coupon>
 
         builder.Property(c => c.ExpirationDate)
                .IsRequired();
-
-        builder.HasOne(c => c.Customer)
-               .WithMany(u => u.Coupons)
-               .HasForeignKey(c => c.CustomerId)
-               .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne(c => c.Offer)
            .WithMany(o => o.Coupons)

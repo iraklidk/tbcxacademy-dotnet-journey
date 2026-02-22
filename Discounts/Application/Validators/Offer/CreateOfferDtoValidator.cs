@@ -1,5 +1,5 @@
-﻿using Application.DTOs.Offer;
-using FluentValidation;
+﻿using FluentValidation;
+using Application.DTOs.Offer;
 
 public class CreateOfferDtoValidator : AbstractValidator<CreateOfferDto>
 {

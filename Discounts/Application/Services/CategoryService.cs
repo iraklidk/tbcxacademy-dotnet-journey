@@ -1,9 +1,9 @@
-﻿using Discounts.Application.Exceptions;
-using Application.Interfaces.Services;
-using Application.Interfaces.Repos;
-using Application.DTOs.Category;
+﻿using Mapster;
 using Domain.Entities;
-using Mapster;
+using Application.DTOs.Category;
+using Application.Interfaces.Repos;
+using Application.Interfaces.Services;
+using Discounts.Application.Exceptions;
 
 namespace Application.Services;
 
@@ -11,10 +11,7 @@ public class CategoryService : ICategoryService
 {
     private readonly ICategoryRepository _repository;
 
-    public CategoryService(ICategoryRepository repository)
-    {
-        _repository = repository;
-    }
+    public CategoryService(ICategoryRepository repository) => _repository = repository;
 
     public async Task<IEnumerable<CategoryDto>> GetAllAsync(CancellationToken ct = default)
     {
@@ -42,9 +39,7 @@ public class CategoryService : ICategoryService
     {
         var existing = await _repository.GetByIdAsync(dto.Id, ct).ConfigureAwait(false);
         if (existing == null) throw new NotFoundException($"Category with Id {dto.Id} was not found!");
-        existing.Name = dto.Name;
-        existing.Description = dto.Description;
-        await _repository.UpdateAsync(existing, ct).ConfigureAwait(false);
+        await _repository.UpdateAsync(dto.Adapt(existing), ct).ConfigureAwait(false);
     }
 
     public async Task DeleteAsync(int id, CancellationToken ct = default)

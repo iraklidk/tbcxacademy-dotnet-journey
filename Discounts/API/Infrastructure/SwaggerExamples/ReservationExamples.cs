@@ -1,5 +1,5 @@
-﻿using Swashbuckle.AspNetCore.Filters;
-using Application.DTOs.Reservation;
+﻿using Application.DTOs.Reservation;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace API.Infrastructure.SwaggerExamples;
 

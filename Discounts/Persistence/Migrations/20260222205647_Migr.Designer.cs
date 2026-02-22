@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DiscountsDbContext))]
-    [Migration("20260221183931_Init")]
-    partial class Init
+    [Migration("20260222205647_Migr")]
+    partial class Migr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,7 +59,7 @@ namespace Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<string>("CustomerName")
@@ -487,8 +487,7 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entities.Customer", "Customer")
                         .WithMany("Coupons")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Domain.Entities.Offer", "Offer")
                         .WithMany("Coupons")

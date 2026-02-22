@@ -1,6 +1,6 @@
-﻿using Swashbuckle.AspNetCore.Filters;
+﻿using Domain.Constants;
 using Application.DTOs.Offer;
-using Domain.Constants;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace API.Infrastructure.SwaggerExamples;
 

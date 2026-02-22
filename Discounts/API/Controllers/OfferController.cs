@@ -1,8 +1,8 @@
-﻿using API.Infrastructure.SwaggerExamples;
-using Application.Interfaces.Services;
-using Swashbuckle.AspNetCore.Filters;
+﻿using Application.DTOs.Offer;
 using Microsoft.AspNetCore.Mvc;
-using Application.DTOs.Offer;
+using Swashbuckle.AspNetCore.Filters;
+using Application.Interfaces.Services;
+using API.Infrastructure.SwaggerExamples;
 using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers;
@@ -15,11 +15,7 @@ namespace API.Controllers;
 public class OfferController : ControllerBase
 {
     private readonly IOfferService _offerService;
-
-    public OfferController(IOfferService offerService)
-    {
-        _offerService = offerService;
-    }
+    public OfferController(IOfferService offerService) => _offerService = offerService;
 
     /// <summary>
     /// Get all offers.
@@ -30,7 +26,7 @@ public class OfferController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<OfferDto>), 200)]
     public async Task<IActionResult> GetAll(CancellationToken ct)
     {
-        var offers = await _offerService.GetAllAsync(ct).ConfigureAwait(false);
+        var offers = await _offerService.GetAllWithCategoryNamesAsync(ct).ConfigureAwait(false);
         return Ok(offers);
     }
 
@@ -59,7 +55,6 @@ public class OfferController : ControllerBase
     /// <param name="ct">Cancellation token.</param>
     /// <returns>The created offer.</returns>
     [HttpPost]
-    [Authorize(Roles = "Merchant")]
     [ProducesResponseType(typeof(OfferDto), 201)]
     [ProducesResponseType(400)]
     public async Task<IActionResult> Create([FromBody] CreateOfferDto dto, CancellationToken ct)
@@ -75,7 +70,6 @@ public class OfferController : ControllerBase
     /// <param name="ct">Cancellation token.</param>
     /// <returns>No content if update is successful.</returns>
     [HttpPut]
-    [Authorize(Roles = "Merchant")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
@@ -92,7 +86,6 @@ public class OfferController : ControllerBase
     /// <param name="ct">Cancellation token.</param>
     /// <returns>No content if deletion is successful.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Merchant, Admin")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)

@@ -2,7 +2,4 @@
 
 namespace Application.Interfaces.Repos;
 
-public interface IGlobalSettingsRepository : IBaseRepository<GlobalSettings>
-{
-
-}
+public interface IGlobalSettingsRepository : IBaseRepository<GlobalSettings> { }

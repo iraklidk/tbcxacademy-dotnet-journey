@@ -1,9 +1,9 @@
-﻿using Application.DTOs.User;
-using Application.Interfaces.Services;
-using Microsoft.AspNetCore.Authorization;
+﻿using Persistence.Identity;
+using Application.DTOs.User;
 using Microsoft.AspNetCore.Mvc;
-using Persistence.Identity;
+using Application.Interfaces.Services;
 using Swashbuckle.AspNetCore.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Discounts.API.Controllers;
 
@@ -12,15 +12,10 @@ namespace Discounts.API.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "Admin")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
-
-    public UserController(IUserService userService)
-    {
-        _userService = userService;
-    }
+    public UserController(IUserService userService) => _userService = userService;
 
     /// <summary>
     /// Get user by identifier.

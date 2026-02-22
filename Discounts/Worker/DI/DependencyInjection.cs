@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Worker.CleanupService;
 using Microsoft.Extensions.Configuration;
-using Worker.CleanupService;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Worker.DI;
 

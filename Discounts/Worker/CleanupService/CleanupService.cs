@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Application.Interfaces.Services;
+﻿using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Application.Interfaces.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Worker.CleanupService;
 
@@ -43,7 +43,7 @@ internal class BackgroundWorker : BackgroundService
                 _logger.LogError(ex, "Cleanup error.");
             }
 
-            await Task.Delay(TimeSpan.FromMinutes(_settings.CleanupIntervalMinutes), stoppingToken).ConfigureAwait(false);
+            await Task.Delay(TimeSpan.FromMinutes(15), stoppingToken).ConfigureAwait(false);
         }
     }
 }

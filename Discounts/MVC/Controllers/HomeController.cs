@@ -1,22 +1,22 @@
-using Application.Interfaces.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using MVC.Models.Server;
+using Mapster;
 using Domain.Constants;
 using MVC.Models.Offer;
-using Mapster;
+using MVC.Models.Server;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using Application.Interfaces.Services;
 
 namespace MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ICategoryService _categoryService;
         private readonly IOfferService _offerService;
-        public HomeController(ICategoryService categoryService,
-                              IOfferService offerService)
+        private readonly ICategoryService _categoryService;
+        public HomeController(IOfferService offerService,
+                              ICategoryService categoryService)
         {
-            _categoryService = categoryService;
             _offerService = offerService;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
@@ -25,7 +25,7 @@ namespace MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Offers(string searchTerm, int? categoryId, CancellationToken ct = default)
         {
-            var offers = await _offerService.GetAllAsync(ct).ConfigureAwait(false);
+            var offers = await _offerService.GetAllWithCategoryNamesAsync(ct).ConfigureAwait(false);
             var categories = await _categoryService.GetAllAsync(ct).ConfigureAwait(false);
 
             if (!User.IsInRole("Admin")) offers = offers.Where(o => o.Status == OfferStatus.Approved || o.Status == OfferStatus.Expired);

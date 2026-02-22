@@ -20,7 +20,7 @@ public class Offer
 
     public DateTime StartDate { get; set; }
 
-    public DateTime EndDate { get; set; }
+    public DateTime EndDate { get; set; } = DateTime.UtcNow.AddDays(5);
 
     public DateTime Created { get; set; } = DateTime.UtcNow;
 

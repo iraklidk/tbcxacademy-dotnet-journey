@@ -1,5 +1,5 @@
-﻿using Application.DTOs.Category;
-using FluentValidation;
+﻿using FluentValidation;
+using Application.DTOs.Category;
 
 public class CreateCategoryDtoValidator : AbstractValidator<CreateCategoryDto>
 {

@@ -1,5 +1,5 @@
-﻿using Application.DTOs.Auth;
-using FluentValidation;
+﻿using FluentValidation;
+using Application.DTOs.Auth;
 
 public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
 {

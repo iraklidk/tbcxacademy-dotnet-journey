@@ -1,5 +1,5 @@
-﻿using Discounts.Persistence.Context;
-using Application.Interfaces;
+﻿using Application.Interfaces;
+using Discounts.Persistence.Context;
 
 namespace Infrastructure.Persistence;
 
@@ -7,10 +7,7 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly DiscountsDbContext _dbContext;
 
-    public UnitOfWork(DiscountsDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    public UnitOfWork(DiscountsDbContext dbContext) => _dbContext = dbContext;
 
     public async Task BeginTransactionAsync(CancellationToken ct = default)
         => await _dbContext.Database.BeginTransactionAsync(ct).ConfigureAwait(false);

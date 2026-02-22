@@ -1,5 +1,5 @@
-﻿using Application.DTOs.Merchant;
-using FluentValidation;
+﻿using FluentValidation;
+using Application.DTOs.Merchant;
 
 public class UpdateMerchantDtoValidator : AbstractValidator<UpdateMerchantDto>
 {

@@ -8,13 +8,13 @@ public class Reservation
 
     public Offer Offer { get; set; } = null!;
 
+    public DateTime ExpiresAt { get; set; }
+
+    public bool IsActive { get; set; } = true;
+
     public int CustomerId { get; set; }
 
     public Customer Customer { get; set; } = null!;
 
     public DateTime ReservedAt { get; set; } = DateTime.UtcNow;
-
-    public DateTime ExpiresAt { get; set; }
-
-    public bool IsActive { get; set; } = true;
 }

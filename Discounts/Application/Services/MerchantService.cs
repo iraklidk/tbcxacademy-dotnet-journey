@@ -1,26 +1,31 @@
-﻿using Discounts.Application.Exceptions;
-using Application.Interfaces.Services;
-using Application.Interfaces.Repos;
-using Application.DTOs.Merchant;
-using Application.DTOs.Offer;
+﻿using Mapster;
 using Domain.Entities;
-using Mapster;
+using Persistence.Identity;
+using Application.DTOs.Offer;
+using Application.DTOs.Merchant;
+using Application.Interfaces.Repos;
+using Application.Interfaces.Services;
+using Discounts.Application.Exceptions;
+using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services;
 
 public class MerchantService : IMerchantService
 {
+    private readonly IUserService _userService;
+    private readonly IOfferRepository _offerRepository;
     private readonly IMerchantRepository _merchantRepository;
     private readonly ICategoryRepository _categoryRepository;
-    private readonly IOfferRepository _offerRepository;
 
-    public MerchantService(IMerchantRepository merchantRepository,
-                           ICategoryRepository categoryRepository,
-                           IOfferRepository offerRepository)
+    public MerchantService(IUserService userService,
+                           IOfferRepository offerRepository,
+                           IMerchantRepository merchantRepository,
+                           ICategoryRepository categoryRepository)
     {
-        _categoryRepository = categoryRepository;
-        _merchantRepository = merchantRepository;
+        _userService = userService;
         _offerRepository = offerRepository;
+        _merchantRepository = merchantRepository;
+        _categoryRepository = categoryRepository;
     }
 
     public async Task<MerchantResponseDto> GetMerchantByUserIdAsync(int userId, CancellationToken ct = default)
@@ -51,9 +56,8 @@ public class MerchantService : IMerchantService
         => (await _merchantRepository.GetAllAsync(ct).ConfigureAwait(false)).Adapt<IEnumerable<MerchantResponseDto>>();
 
     public async Task AddMerchantAsync(CreateMerchantDto merchant, CancellationToken ct = default)
-    {
-        await _merchantRepository.AddAsync(merchant.Adapt<Merchant>(), ct).ConfigureAwait(false);
-    }
+        => await _merchantRepository.AddAsync(merchant.Adapt<Merchant>(), ct).ConfigureAwait(false);
+    
 
     public async Task UpdateMerchantAsync(UpdateMerchantDto dto, CancellationToken ct = default)
     {
@@ -71,8 +75,9 @@ public class MerchantService : IMerchantService
 
     public async Task DeleteMerchantAsync(int id, CancellationToken ct = default)
     {
-        var merchant = _merchantRepository.GetByIdAsync(id, ct).Result;
+        var merchant = await _merchantRepository.GetByIdAsync(id, ct).ConfigureAwait(false);
         if (merchant == null) throw new NotFoundException($"Merchant with id {id} not found!");
         await _merchantRepository.DeleteAsync(merchant, ct).ConfigureAwait(false);
+        await _userService.DeleteUserAsync(merchant.UserId, ct).ConfigureAwait(false);
     }
 }

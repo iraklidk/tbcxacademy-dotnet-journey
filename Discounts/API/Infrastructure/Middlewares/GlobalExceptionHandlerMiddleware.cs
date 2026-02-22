@@ -1,5 +1,5 @@
-using Discounts.Application.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using Discounts.Application.Exceptions;
 
 public class GlobalExceptionHandlerMiddleware
 {

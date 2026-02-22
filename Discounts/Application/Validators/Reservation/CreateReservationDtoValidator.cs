@@ -1,5 +1,5 @@
-﻿using Application.DTOs.Reservation;
-using FluentValidation;
+﻿using FluentValidation;
+using Application.DTOs.Reservation;
 
 public class CreateReservationDtoValidator : AbstractValidator<CreateReservationDto>
 {

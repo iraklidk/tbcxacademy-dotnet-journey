@@ -1,28 +1,28 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Application.Interfaces.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Mapster;
+using MVC.Models.Offer;
 using Application.DTOs.Offer;
 using System.Security.Claims;
-using MVC.Models.Offer;
-using Mapster;
+using Microsoft.AspNetCore.Mvc;
+using Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 
 [Authorize(Roles = "Merchant")]
 public class MerchantController : Controller
 {
-    private readonly ICategoryService _categoryService;
-    private readonly IMerchantService _merchantService;
-    private readonly ICouponService _couponService;
     private readonly IOfferService _offerService;
+    private readonly ICouponService _couponService;
+    private readonly IMerchantService _merchantService;
+    private readonly ICategoryService _categoryService;
 
-    public MerchantController(ICategoryService categoryService,
+    public MerchantController(IOfferService offerService,
+                              ICouponService couponService,
                               IMerchantService merchantService,
-                              ICouponService couponApiService,
-                              IOfferService offerService)
+                              ICategoryService categoryService)
     {
-        _categoryService = categoryService;
-        _merchantService = merchantService;
-        _couponService = couponApiService;
         _offerService = offerService;
+        _couponService = couponService;
+        _merchantService = merchantService;
+        _categoryService = categoryService;
     }
 
     [HttpGet]

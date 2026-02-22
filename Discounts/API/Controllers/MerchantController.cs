@@ -1,9 +1,9 @@
-﻿using Application.DTOs.Merchant;
+﻿using Domain.Entities;
 using Application.DTOs.Offer;
-using Application.Interfaces.Services;
-using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Application.DTOs.Merchant;
+using Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers;
 
@@ -15,11 +15,7 @@ namespace API.Controllers;
 public class MerchantController : ControllerBase
 {
     private readonly IMerchantService _merchantService;
-
-    public MerchantController(IMerchantService merchantService)
-    {
-        _merchantService = merchantService;
-    }
+    public MerchantController(IMerchantService merchantService) => _merchantService = merchantService;
 
     /// <summary>
     /// Gets merchant by id
@@ -92,7 +88,6 @@ public class MerchantController : ControllerBase
     /// <response code="201">Merchant created successfully</response>
     /// <response code="400">Invalid request</response>
     [HttpPost]
-    [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] CreateMerchantDto merchant, CancellationToken ct)
     {
@@ -107,7 +102,6 @@ public class MerchantController : ControllerBase
     /// <param name="ct">Cancellation token</param>
     /// <response code="204">Merchant updated successfully</response>
     [HttpPut]
-    [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Update([FromBody] UpdateMerchantDto merchant, CancellationToken ct)
     {
@@ -123,7 +117,6 @@ public class MerchantController : ControllerBase
     /// <response code="204">Merchant deleted successfully</response>
     /// <response code="404">Merchant not found</response>
     [HttpDelete("{id:int}")]
-    [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)

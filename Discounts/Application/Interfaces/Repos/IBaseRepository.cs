@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Application.Interfaces.Repos;
 
@@ -19,5 +19,5 @@ public interface IBaseRepository<T> where T : class
 
     Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken ct = default);
 
-    public Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate, CancellationToken ct = default);
+    Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate, CancellationToken ct = default);
 }

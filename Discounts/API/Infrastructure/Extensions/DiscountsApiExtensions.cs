@@ -1,9 +1,9 @@
-﻿using Swashbuckle.AspNetCore.Filters;
-using Asp.Versioning.ApiExplorer;
-using Microsoft.OpenApi.Models;
-using System.Globalization;
+﻿using Serilog;
 using Asp.Versioning;
-using Serilog;
+using System.Globalization;
+using Microsoft.OpenApi.Models;
+using Asp.Versioning.ApiExplorer;
+using Swashbuckle.AspNetCore.Filters;
 
 public static class DiscountsApiExtensions
 {

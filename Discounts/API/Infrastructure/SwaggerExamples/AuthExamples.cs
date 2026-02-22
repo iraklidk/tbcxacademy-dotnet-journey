@@ -1,5 +1,5 @@
-﻿using Swashbuckle.AspNetCore.Filters;
-using Application.DTOs.Auth;
+﻿using Application.DTOs.Auth;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace API.Infrastructure.SwaggerExamples;
 

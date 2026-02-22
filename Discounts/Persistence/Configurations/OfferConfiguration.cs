@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Discounts.Persistence.Configurations;
 

@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 public class HealthController : Controller
 {

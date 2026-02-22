@@ -1,8 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddContainer(builder.Configuration);
-
-builder.AddLogging();
+builder.Services.AddContainer(builder);
 
 var app = builder.Build();
 

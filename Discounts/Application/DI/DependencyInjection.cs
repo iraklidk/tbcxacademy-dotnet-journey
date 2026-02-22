@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Application.Interfaces.Services;
+﻿using FluentValidation;
 using Application.Services;
-using FluentValidation;
 using FluentValidation.AspNetCore;
+using Application.Interfaces.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.DI;
 
@@ -10,20 +10,20 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
-        services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
-        services.AddScoped<IGlobalSettingsService, GlobalSettingsService>();
-        services.AddScoped<IReservationService, ReservationService>();
-        services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IOfferService, OfferService>();
+        services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<ICouponService, CouponService>();
+        services.AddScoped<ICleanupService, CleanupService>();
         services.AddScoped<IMerchantService, MerchantService>();
         services.AddScoped<ICustomerService, CustomerService>();
         services.AddScoped<IMerchantService, MerchantService>();
-        services.AddScoped<ICleanupService, CleanupService>();
-        services.AddScoped<ICouponService, CouponService>();
-        services.AddScoped<IEmailService, EmailService>();
-        services.AddScoped<IOfferService, OfferService>();
-        services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IReservationService, ReservationService>();
+        services.AddScoped<IGlobalSettingsService, GlobalSettingsService>();
+        services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
+        services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
         return services;
     }
 }

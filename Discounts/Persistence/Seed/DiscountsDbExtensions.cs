@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Domain.Constants;
+using Persistence.Identity;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Discounts.Persistence.Context;
-using Microsoft.AspNetCore.Builder;
-using Persistence.Identity;
-using Domain.Constants;
-using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Discounts.Persistence.Seeding;
 

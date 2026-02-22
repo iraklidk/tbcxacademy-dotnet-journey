@@ -1,15 +1,16 @@
-﻿using Application.DI;
+﻿using Worker.DI;
+using Application.DI;
 using Persistence.DI;
-using Worker.DI;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddContainer(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddContainer(this IServiceCollection services, WebApplicationBuilder builder)
     {;
-        services.AddInfrastructure(config);
-        services.AddPresentationServices();
-        services.RegisterWorker(config);
+        builder.AddLogging();
         services.AddApplication();
+        services.AddPresentationServices();
+        services.RegisterWorker(builder.Configuration);
+        services.AddInfrastructure(builder.Configuration);
         return services;
     }
 }

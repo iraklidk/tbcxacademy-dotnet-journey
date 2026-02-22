@@ -1,32 +1,32 @@
-﻿using Discounts.Application.Exceptions;
-using Application.Interfaces.Services;
+﻿using Mapster;
+using Domain.Entities;
+using Application.Interfaces;
 using Application.Interfaces.Repos;
 using Application.DTOs.Reservation;
-using Application.Interfaces;
-using Domain.Entities;
-using Mapster;
+using Application.Interfaces.Services;
+using Discounts.Application.Exceptions;
 
 namespace Application.Services;
 
 public class ReservationService : IReservationService
 {
-    private readonly IGlobalSettingsRepository _globalSettingsRepository;
-    private readonly IReservationRepository _reservationRepository;
-    private readonly ICustomerRepository _customerRepository;
-    private readonly IOfferRepository _offerRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IOfferRepository _offerRepository;
+    private readonly ICustomerRepository _customerRepository;
+    private readonly IReservationRepository _reservationRepository;
+    private readonly IGlobalSettingsRepository _globalSettingsRepository;
 
-    public ReservationService(IGlobalSettingsRepository globalSettingsRepository,
-                              IReservationRepository reservationRepository,
-                              ICustomerRepository customerRepository,
+    public ReservationService(IUnitOfWork unitOfWork,
                               IOfferRepository offerRepository,
-                              IUnitOfWork unitOfWork)
+                              ICustomerRepository customerRepository,
+                              IReservationRepository reservationRepository,
+                              IGlobalSettingsRepository globalSettingsRepository)
     {
-        _globalSettingsRepository = globalSettingsRepository;
-        _reservationRepository = reservationRepository;
-        _customerRepository = customerRepository;
-        _offerRepository = offerRepository;
         _unitOfWork = unitOfWork;
+        _offerRepository = offerRepository;
+        _customerRepository = customerRepository;
+        _reservationRepository = reservationRepository;
+        _globalSettingsRepository = globalSettingsRepository;
     }
 
     public async Task<IEnumerable<ReservationDto>> GetAllAsync(CancellationToken ct)
@@ -59,6 +59,8 @@ public class ReservationService : IReservationService
     {
         await _unitOfWork.BeginTransactionAsync(ct).ConfigureAwait(false);
 
+        if(dto.ExpiresAt <= DateTime.UtcNow) throw new DomainException("Expiration date must be in the future!");
+
         var customer = await _customerRepository.GetCustomerByUserIdAsync(dto.UserId, ct).ConfigureAwait(false);
         if(customer == null) throw new NotFoundException($"User with user id {dto.UserId} not found!");
 
@@ -72,8 +74,6 @@ public class ReservationService : IReservationService
         if (offer.RemainingCoupons <= 0) throw new DomainException("No coupons available for this offer!");
         await _offerRepository.ChangeRemainingCouponsAsync(dto.OfferId, -1, ct).ConfigureAwait(false);
 
-        if(dto.ExpiresAt <= DateTime.UtcNow) throw new DomainException("Expiration date must be in the future!");
-        
         var reservation = new Reservation
         {
             OfferId = dto.OfferId,
@@ -109,6 +109,15 @@ public class ReservationService : IReservationService
     public async Task<List<ReservationDto>> GetByUserAsync(int userId, CancellationToken ct = default)
     {
         var reservations = await _reservationRepository.GetByUserAsync(userId, ct).ConfigureAwait(false);
-        return reservations.Adapt<List<ReservationDto>>();
+        return reservations.Select(r => new ReservationDto
+        {
+            Id = r.Id,
+            OfferId = r.OfferId,
+            OfferTitle = r.Offer?.Title,
+            CustomerId = r.CustomerId,
+            Price = r.Offer?.DiscountedPrice ?? 0m,
+            ReservedAt = r.ReservedAt,
+            ExpiresAt = r.ExpiresAt
+        }).ToList();
     }
 }

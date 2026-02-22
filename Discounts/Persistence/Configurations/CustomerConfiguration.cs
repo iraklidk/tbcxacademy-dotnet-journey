@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
 using Persistence.Identity;
-using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Discounts.Persistence.Configurations;
 
@@ -26,7 +26,7 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.HasMany(c => c.Coupons)
                .WithOne(c => c.Customer)
                .HasForeignKey(c => c.CustomerId)
-               .OnDelete(DeleteBehavior.Cascade);
+               .OnDelete(DeleteBehavior.SetNull);
 
         builder.HasMany(c => c.Reservations)
                .WithOne(r => r.Customer)

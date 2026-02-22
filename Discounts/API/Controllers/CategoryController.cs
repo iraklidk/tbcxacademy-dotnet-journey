@@ -1,8 +1,8 @@
-﻿using API.Infrastructure.SwaggerExamples;
-using Application.Interfaces.Services;
-using Swashbuckle.AspNetCore.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
 using Application.DTOs.Category;
-using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Filters;
+using Application.Interfaces.Services;
+using API.Infrastructure.SwaggerExamples;
 using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers;
@@ -15,11 +15,7 @@ namespace API.Controllers;
 public class CategoryController : ControllerBase
 {
     private readonly ICategoryService _categoryService;
-
-    public CategoryController(ICategoryService categoryService)
-    {
-        _categoryService = categoryService;
-    }
+    public CategoryController(ICategoryService categoryService) => _categoryService = categoryService;
 
     /// <summary>
     /// Get category by identifier.
@@ -57,7 +53,6 @@ public class CategoryController : ControllerBase
     /// <param name="ct">Cancellation token.</param>
     /// <returns>The created category.</returns>
     [HttpPost]
-    [Authorize (Roles = "Admin")]
     [ProducesResponseType(400)]
     [ProducesResponseType(typeof(CategoryDto), 201)]
     [SwaggerResponseExample(201, typeof(CategoryDtoExample))]
@@ -78,7 +73,6 @@ public class CategoryController : ControllerBase
     /// Returns HTTP 400 if the input data is invalid, or HTTP 404 if the category does not exist.
     /// </returns>
     [HttpPut]
-    [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -96,7 +90,6 @@ public class CategoryController : ControllerBase
     /// <param name="ct">Cancellation token.</param>
     /// <returns>No content if deletion is successful.</returns>
     [HttpDelete("{id:int}")]
-    [Authorize(Roles = "Admin")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)

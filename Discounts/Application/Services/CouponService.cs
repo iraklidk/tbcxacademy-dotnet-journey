@@ -1,32 +1,33 @@
-﻿using Discounts.Application.Exceptions;
-using Application.Interfaces.Services;
-using Application.Interfaces.Repos;
-using Application.DTOs.Coupon;
-using Application.Interfaces;
+﻿using Mapster;
 using Domain.Entities;
-using Mapster;
+using Domain.Constants;
+using Application.Interfaces;
+using Application.DTOs.Coupon;
+using Application.Interfaces.Repos;
+using Application.Interfaces.Services;
+using Discounts.Application.Exceptions;
 
 namespace Application.Services;
 
 public class CouponService : ICouponService
 {
-    private readonly IMerchantRepository _merchantRepository;
-    private readonly ICustomerRepository _customerRepository;
-    private readonly ICouponRepository _couponRepository;
-    private readonly IOfferRepository _offerRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IOfferRepository _offerRepository;
+    private readonly ICouponRepository _couponRepository;
+    private readonly ICustomerRepository _customerRepository;
+    private readonly IMerchantRepository _merchantRepository;
 
-    public CouponService(ICustomerRepository customerRepository,
-                         IMerchantRepository merchantRepository,
-                         ICouponRepository couponRepository,
+    public CouponService(IUnitOfWork unitOfWork,
                          IOfferRepository offerRepository,
-                         IUnitOfWork unitOfWork)
+                         ICouponRepository couponRepository,
+                         IMerchantRepository merchantRepository,
+                         ICustomerRepository customerRepository)
     {
-        _customerRepository = customerRepository;
-        _merchantRepository = merchantRepository;
-        _couponRepository = couponRepository;
-        _offerRepository = offerRepository;
         _unitOfWork = unitOfWork;
+        _offerRepository = offerRepository;
+        _couponRepository = couponRepository;
+        _merchantRepository = merchantRepository;
+        _customerRepository = customerRepository;
     }
 
     public async Task<List<CouponDto>> GetAllAsync(CancellationToken ct = default)
@@ -67,8 +68,9 @@ public class CouponService : ICouponService
     public async Task<CouponDto> CreateCouponAsync(CreateCouponDto dto, CancellationToken ct = default)
     {
         await _unitOfWork.BeginTransactionAsync(ct).ConfigureAwait(false);
-
+        
         var offer = await _offerRepository.GetByIdAsync(dto.OfferId, ct).ConfigureAwait(false);
+        if (offer == null) throw new NotFoundException($"Offer with id {dto.OfferId} not found!");
         var customer = await _customerRepository.GetCustomerByUserIdAsync(dto.UserId, ct).ConfigureAwait(false);
         if (customer == null) throw new NotFoundException($"User with user id {dto.UserId} not found!");
 
@@ -85,6 +87,7 @@ public class CouponService : ICouponService
             ExpirationDate = offer.EndDate,
             OfferId = dto.OfferId
         };
+
         await _couponRepository.AddAsync(coupon, ct).ConfigureAwait(false);
         offer.RemainingCoupons -= 1;
         await _offerRepository.UpdateAsync(offer, ct).ConfigureAwait(false);
@@ -106,10 +109,12 @@ public class CouponService : ICouponService
         await _couponRepository.DeleteAsync(coupon, ct).ConfigureAwait(false);
     }
 
-    public async Task<CouponDto?> GetByCustomerAsync(int customerId, CancellationToken ct = default)
+    public async Task<List<CouponDto?>> GetByCustomerAsync(int customerId, CancellationToken ct = default)
     {
-        var coupon = await _couponRepository.GetByCustomerAsync(customerId, ct).ConfigureAwait(false);
-        if (coupon == null) throw new NotFoundException($"No coupons found for customer with Id {customerId}!");
-        return coupon.Adapt<CouponDto?>();
+        var customer = await _customerRepository.GetByIdAsync(customerId, ct).ConfigureAwait(false);
+        if (customer == null) throw new NotFoundException($"Customer with id {customerId} not found!");
+        var coupons = await _couponRepository.GetByCustomerAsync(customerId, ct).ConfigureAwait(false);
+        if (coupons == null) throw new NotFoundException($"No coupons found for customer with Id {customerId}!");
+        return coupons.Adapt<List<CouponDto?>>();
     }
 }

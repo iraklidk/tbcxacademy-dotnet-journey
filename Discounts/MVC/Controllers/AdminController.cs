@@ -1,30 +1,30 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Discounts.Application.Exceptions;
-using Application.DTOs.GlobalSettings;
-using Application.Interfaces.Services;
-using Application.DTOs.Category;
-using Microsoft.AspNetCore.Mvc;
-using Application.DTOs.Offer;
+﻿using Mapster;
 using Application.DTOs.User;
-using Mapster;
+using Application.DTOs.Offer;
+using Microsoft.AspNetCore.Mvc;
+using Application.DTOs.Category;
+using Application.Interfaces.Services;
+using Application.DTOs.GlobalSettings;
+using Discounts.Application.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 [Authorize(Roles = "Admin")]
 public class AdminController : Controller
 {
-    private readonly IGlobalSettingsService _globalSettingsService;
-    private readonly ICategoryService _categoryService;
-    private readonly IOfferService _offerService;
     private readonly IUserService _userService;
+    private readonly IOfferService _offerService;
+    private readonly ICategoryService _categoryService;
+    private readonly IGlobalSettingsService _globalSettingsService;
 
-    public AdminController(IGlobalSettingsService globalSettingsService,
-                           ICategoryService categoryService,
+    public AdminController(IUserService userService,
                            IOfferService offerService,
-                           IUserService userService)
+                           ICategoryService categoryService,
+                           IGlobalSettingsService globalSettingsService)
     {
-        _globalSettingsService = globalSettingsService;
-        _categoryService = categoryService;
-        _offerService = offerService;
         _userService = userService;
+        _offerService = offerService;
+        _categoryService = categoryService;
+        _globalSettingsService = globalSettingsService;
     }
 
     public IActionResult Index() => View();

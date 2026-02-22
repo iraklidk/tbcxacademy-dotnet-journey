@@ -2,9 +2,9 @@
 
 public class GlobalSettingsDto
 {
-    public ushort BookingDurationMinutes { get; set; }
+    public int ReservationPrice { get; set; }
 
     public ushort MerchantEditHours { get; set; }
 
-    public int ReservationPrice { get; set; }
+    public ushort BookingDurationMinutes { get; set; }
 }

@@ -1,5 +1,5 @@
-﻿using Swashbuckle.AspNetCore.Filters;
-using Application.DTOs.Category;
+﻿using Application.DTOs.Category;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace API.Infrastructure.SwaggerExamples;
 

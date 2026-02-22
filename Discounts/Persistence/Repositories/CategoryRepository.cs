@@ -1,7 +1,7 @@
-﻿using Discounts.Persistence.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
 using Application.Interfaces.Repos;
-using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Discounts.Persistence.Context;
 
 namespace Discounts.Persistence.Repositories;
 

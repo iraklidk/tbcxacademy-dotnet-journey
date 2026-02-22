@@ -1,21 +1,21 @@
-﻿using Application.Interfaces.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+﻿using Mapster;
 using MVC.Models.Offer;
-using Mapster;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
+using Application.Interfaces.Services;
 
 namespace Discounts.Web.Controllers
 {
     public class DetailsController : Controller
     {
-        private readonly IMerchantService _merchantService;
         private readonly IOfferService _offerService;
+        private readonly IMerchantService _merchantService;
 
-        public DetailsController(IMerchantService merchantService,
-                                 IOfferService offerService)
+        public DetailsController(IOfferService offerService,
+                                 IMerchantService merchantService)
         {
-            _merchantService = merchantService;
             _offerService = offerService;
+            _merchantService = merchantService;
         }
 
         [HttpGet("/Details/{id}")]

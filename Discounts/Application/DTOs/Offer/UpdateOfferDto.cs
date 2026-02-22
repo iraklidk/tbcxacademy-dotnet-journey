@@ -8,15 +8,15 @@ public class UpdateOfferDto
 
     public string? Title { get; set; }
 
-    public string? Description { get; set; }
+    public DateTime EndDate { get; set; }
 
-    public decimal DiscountedPrice { get; set; }
+    public string? Description { get; set; }
 
     public int RemainingCoupons { get; set; }
 
-    public DateTime EndDate { get; set; }
-
-    public OfferStatus Status { get; set; } = OfferStatus.Pending;
+    public decimal DiscountedPrice { get; set; }
 
     public DateTime Updated { get; set; } = DateTime.UtcNow;
+
+    public OfferStatus Status { get; set; } = OfferStatus.Pending;
 }

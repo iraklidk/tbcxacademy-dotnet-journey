@@ -1,19 +1,19 @@
-﻿using Application.Interfaces.Services;
+﻿using Domain.Constants;
 using Application.Interfaces.Repos;
-using Domain.Constants;
+using Application.Interfaces.Services;
 
 namespace Application.Services;
 
 public class CleanupService : ICleanupService
 {
-    private readonly IReservationRepository _reservationRepository;
     private readonly IOfferRepository _offerRepository;
+    private readonly IReservationRepository _reservationRepository;
 
-    public CleanupService(IReservationRepository reservationRepository,
-                          IOfferRepository offerRepository)
+    public CleanupService(IOfferRepository offerRepository,
+                          IReservationRepository reservationRepository)
     {
-        _reservationRepository = reservationRepository;
         _offerRepository = offerRepository;
+        _reservationRepository = reservationRepository;
     }
 
     public async Task CleanupAsync(CancellationToken ct)
@@ -32,8 +32,11 @@ public class CleanupService : ICleanupService
             else dict[reservation.OfferId] = 1;
         }
 
-        var offerToIncreaseCoupon = await _offerRepository.GetByIdsAsync(dict.Keys.ToList(), ct).ConfigureAwait(false);
-        foreach(var offer in offerToIncreaseCoupon) offer.RemainingCoupons += dict[offer.Id];
+        if (dict.Count > 0)
+        {
+            var offerToIncreaseCoupon = await _offerRepository.GetByIdsAsync(dict.Keys.ToList(), ct).ConfigureAwait(false);
+            foreach (var offer in offerToIncreaseCoupon) offer.RemainingCoupons += dict[offer.Id];
+        }
 
         await _offerRepository.SaveChangesAsync(ct).ConfigureAwait(false);
     }

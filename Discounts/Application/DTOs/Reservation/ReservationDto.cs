@@ -6,15 +6,15 @@ public class ReservationDto
 
     public int OfferId { get; set; }
 
-    public int CustomerId { get; set; }
-
-    public string OfferTitle { get; set; } = default!;
-
     public decimal Price { get; set; }
 
-    public bool IsActive { get; set; } = true;
+    public int CustomerId { get; set; }
+
+    public DateTime ExpiresAt { get; set; }
 
     public DateTime ReservedAt { get; set; }
 
-    public DateTime ExpiresAt { get; set; }
+    public bool IsActive { get; set; } = true;
+
+    public string OfferTitle { get; set; } = default!;
 }

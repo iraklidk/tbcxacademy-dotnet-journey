@@ -1,5 +1,5 @@
-﻿using Swashbuckle.AspNetCore.Filters;
-using Application.DTOs.Merchant;
+﻿using Application.DTOs.Merchant;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace API.Infrastructure.SwaggerExamples;
 

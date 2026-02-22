@@ -1,14 +1,14 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.DependencyInjection;
-using Discounts.Persistence.Repositories;
-using Microsoft.Extensions.Configuration;
+﻿using Persistence.Identity;
+using Application.Interfaces;
+using Infrastructure.Persistence;
+using Application.Interfaces.Repos;
 using Discounts.Persistence.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Application.Interfaces.Repos;
-using Infrastructure.Persistence;
-using Application.Interfaces;
-using Persistence.Identity;
+using Microsoft.Extensions.Configuration;
+using Discounts.Persistence.Repositories;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Persistence.DI;
 
@@ -36,14 +36,14 @@ public static class DependencyInjection
                     failureStatus: HealthStatus.Unhealthy,
                     tags: new[] { "db", "sql" });
 
-        services.AddScoped<IGlobalSettingsRepository, GlobalSettingsRepository>();
-        services.AddScoped<IReservationRepository, ReservationRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IOfferRepository, OfferRepository>();
+        services.AddScoped<ICouponRepository, CouponRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IMerchantRepository, MerchantRepository>();
-        services.AddScoped<ICouponRepository, CouponRepository>();
-        services.AddScoped<IOfferRepository, OfferRepository>();
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IReservationRepository, ReservationRepository>();
+        services.AddScoped<IGlobalSettingsRepository, GlobalSettingsRepository>();
         services.AddCors();
         return services;
     }

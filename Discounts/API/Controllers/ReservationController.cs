@@ -1,8 +1,8 @@
-﻿using static API.Infrastructure.SwaggerExamples.ReservationExamples;
-using Application.Interfaces.Services;
-using Swashbuckle.AspNetCore.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
 using Application.DTOs.Reservation;
-using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Filters;
+using Application.Interfaces.Services;
+using static API.Infrastructure.SwaggerExamples.ReservationExamples;
 
 namespace API.Controllers;
 
@@ -14,11 +14,7 @@ namespace API.Controllers;
 public class ReservationController : ControllerBase
 {
     private readonly IReservationService _reservationService;
-
-    public ReservationController(IReservationService reservationService)
-    {
-        _reservationService = reservationService;
-    }
+    public ReservationController(IReservationService reservationService) => _reservationService = reservationService;
 
     /// <summary>
     /// Get all reservations.

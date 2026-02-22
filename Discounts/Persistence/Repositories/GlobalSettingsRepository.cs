@@ -1,6 +1,6 @@
-﻿using Discounts.Persistence.Context;
+﻿using Domain.Entities;
 using Application.Interfaces.Repos;
-using Domain.Entities;
+using Discounts.Persistence.Context;
 
 namespace Discounts.Persistence.Repositories;
 

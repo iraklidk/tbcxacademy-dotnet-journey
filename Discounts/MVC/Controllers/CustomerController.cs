@@ -1,42 +1,42 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Discounts.Application.Exceptions;
-using Application.Interfaces.Services;
-using Application.DTOs.Reservation;
-using Microsoft.AspNetCore.Mvc;
-using Application.DTOs.Coupon;
-using System.Security.Claims;
+﻿using Mapster;
 using Domain.Constants;
 using MVC.Models.Offer;
-using Mapster;
+using System.Security.Claims;
+using Application.DTOs.Coupon;
+using Microsoft.AspNetCore.Mvc;
+using Application.DTOs.Reservation;
+using Application.Interfaces.Services;
+using Discounts.Application.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVC.Controllers;
 
 [Authorize(Roles = "Customer")]
 public class CustomerController : Controller
 {
-    private readonly IReservationService _reservationService;
-    private readonly ICategoryService _categoryService;
-    private readonly ICustomerService _customerService;
-    private readonly ICouponService _couponService;
     private readonly IOfferService _offerService;
+    private readonly ICouponService _couponService;
+    private readonly ICustomerService _customerService;
+    private readonly ICategoryService _categoryService;
+    private readonly IReservationService _reservationService;
 
-    public CustomerController(IReservationService reservationService,
-                              ICustomerService customerService,
-                              ICategoryService categoryService,
+    public CustomerController(IOfferService offerService,
                               ICouponService couponService,
-                              IOfferService offerService)
+                              ICategoryService categoryService,
+                              ICustomerService customerService,
+                              IReservationService reservationService)
     {
-        _reservationService = reservationService;
-        _categoryService = categoryService;
-        _customerService = customerService;
-        _couponService = couponService;
         _offerService = offerService;
+        _couponService = couponService;
+        _customerService = customerService;
+        _categoryService = categoryService;
+        _reservationService = reservationService;
     }
 
     [HttpGet]
     public async Task<IActionResult> Browse(string searchTerm, int? categoryId, CancellationToken ct = default)
     {
-        var offers = await _offerService.GetAllAsync(ct).ConfigureAwait(false);
+        var offers = await _offerService.GetAllWithCategoryNamesAsync(ct).ConfigureAwait(false);
         var categories = await _categoryService.GetAllAsync(ct).ConfigureAwait(false);
         ViewBag.Categories = categories;
 

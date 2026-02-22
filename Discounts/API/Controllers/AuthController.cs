@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Authorization;
-using API.Infrastructure.SwaggerExamples;
-using Application.Interfaces.Services;
-using Swashbuckle.AspNetCore.Filters;
-using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
 using Application.DTOs.Auth;
-using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Filters;
+using Application.Interfaces.Services;
+using API.Infrastructure.SwaggerExamples;
+using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
 
 namespace Discounts.Controllers;
 
@@ -16,11 +16,7 @@ namespace Discounts.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
-
-    public AuthController(IAuthService authService)
-    {
-        _authService = authService;
-    }
+    public AuthController(IAuthService authService) => _authService = authService;
 
     /// <summary>
     /// Authenticate user with username and password.

@@ -1,25 +1,24 @@
-﻿using Discounts.Application.Exceptions;
-using Application.Interfaces.Services;
-using Microsoft.AspNetCore.Identity;
-using Application.Interfaces.Repos;
-using Application.DTOs.Customer;
-using Persistence.Identity;
+﻿using Mapster;
 using Domain.Entities;
-using Mapster;
-using Microsoft.EntityFrameworkCore;
+using Persistence.Identity;
+using Application.DTOs.Customer;
+using Application.Interfaces.Repos;
+using Microsoft.AspNetCore.Identity;
+using Application.Interfaces.Services;
+using Discounts.Application.Exceptions;
 
 namespace Application.Services;
 
-internal class CustomerService : ICustomerService
+public class CustomerService : ICustomerService
 {
-    private readonly ICustomerRepository _customerRepository;
     private readonly UserManager<User> _userManager;
+    private readonly ICustomerRepository _customerRepository;
 
-    public CustomerService(ICustomerRepository customerRepository,
-                           UserManager<User> userManager)
+    public CustomerService(UserManager<User> userManager,
+                           ICustomerRepository customerRepository)
     {
-        _customerRepository = customerRepository;
         _userManager = userManager;
+        _customerRepository = customerRepository;
     }
 
     public async Task<CustomerDto?> GetCustomerByIdAsync(int customerId, CancellationToken ct = default)
@@ -47,7 +46,7 @@ internal class CustomerService : ICustomerService
 
     public async Task<CustomerDto?> GetCustomerByUserIdAsync(int userId, CancellationToken ct = default)
     {
-        if(!(await _userManager.Users.AnyAsync(u => u.Id == userId, ct).ConfigureAwait(false)))
+        if((await _userManager.FindByIdAsync(userId.ToString()).ConfigureAwait(false)) == null)
             throw new NotFoundException($"User with id {userId} not found!");
         var customer = await _customerRepository.GetCustomerByUserIdAsync(userId, ct).ConfigureAwait(false);
         if(customer == null) throw new NotFoundException($"Customer with user id {userId} not found!");

@@ -8,15 +8,11 @@ public class Coupon
 
     public string Code { get; set; } = null!;
 
-    public CouponStatus Status { get; set; } = CouponStatus.Active;
-
     public string CustomerName { get; set; } = null!;
 
-    public int CustomerId { get; set; }
+    public int? CustomerId { get; set; }
 
-    public Customer Customer { get; set; } = null!;
-
-    public DateTime PurchasedAt { get; set; } = DateTime.UtcNow;
+    public Customer? Customer { get; set; } = null!;
 
     public DateTime ExpirationDate { get; set; }
 
@@ -25,4 +21,8 @@ public class Coupon
     public int OfferId { get; set; }
 
     public Offer Offer { get; set; } = null!;
+
+    public DateTime PurchasedAt { get; set; } = DateTime.UtcNow;
+
+    public CouponStatus Status { get; set; } = CouponStatus.Active;
 }

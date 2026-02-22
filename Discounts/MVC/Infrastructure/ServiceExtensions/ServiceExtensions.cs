@@ -1,19 +1,19 @@
-﻿using Application.DI;
+﻿using Worker.DI;
+using Persistence.DI;
+using Application.DI;
 using Identity.SeedROles;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Persistence.DI;
-using Worker.DI;
 
 public static class ServiceExtensions
 {
     public static IServiceCollection AddContainer(this IServiceCollection services, IConfiguration config)
     {
-        services.AddInfrastructure(config);
-        services.AddControllersWithViews();
-        services.RegisterWorker(config);
-        services.RegisterMappingsMvc();
-        services.AddApplication();
         services.RegisterMaps();
+        services.AddApplication();
+        services.RegisterMappingsMvc();
+        services.RegisterWorker(config);
+        services.AddControllersWithViews();
+        services.AddInfrastructure(config);
         return services;
     }
 

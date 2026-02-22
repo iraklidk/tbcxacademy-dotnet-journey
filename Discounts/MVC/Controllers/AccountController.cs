@@ -1,26 +1,26 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Application.Interfaces.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Application.DTOs.Auth;
-using Persistence.Identity;
-using MVC.Models.Customer;
+﻿using Mapster;
 using MVC.Models.Merchant;
-using Mapster;
+using MVC.Models.Customer;
+using Persistence.Identity;
+using Application.DTOs.Auth;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 
 public class AccountController : Controller
 {
-    private readonly SignInManager<User> _signInManager;
-    private readonly UserManager<User> _userManager;
     private readonly IAuthService _authService;
+    private readonly UserManager<User> _userManager;
+    private readonly SignInManager<User> _signInManager;
 
-    public AccountController(SignInManager<User> signInManager,
+    public AccountController(IAuthService authService,
                              UserManager<User> userManager,
-                             IAuthService authService)
+                             SignInManager<User> signInManager)
     {
-        _signInManager = signInManager;
-        _authService = authService;
         _userManager = userManager;
+        _authService = authService;
+        _signInManager = signInManager;
     }
 
     #region Auth&Register
@@ -43,15 +43,12 @@ public class AccountController : Controller
     {
         if (!ModelState.IsValid) return View(model);
 
-        var isValidUser = await _authService.ValidateUserAsync(model.UserName, model.Password, ct).ConfigureAwait(false);
+        var isValidUser = await _authService.LoginAsync(model, ct).ConfigureAwait(false);
         if (isValidUser is null)
         {
             ModelState.AddModelError("", "Invalid username or password.");
             return View(model);
-        }
-
-        var user = await _userManager.FindByNameAsync(model.UserName).ConfigureAwait(false);
-        await _signInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(false);
+        }        
 
         return RedirectToAction("Index", "Home");
     }

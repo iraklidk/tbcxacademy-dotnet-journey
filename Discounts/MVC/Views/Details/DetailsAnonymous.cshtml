@@ -135,6 +135,25 @@
         margin-bottom: 15px;
     }
 
+    .admin_status_pill {
+        float: right;
+        font-size: 11px;
+        padding: 4px 12px;
+        border-radius: 6px;
+        text-transform: uppercase;
+        font-weight: 800;
+    }
+
+        .admin_status_pill.pending {
+            background: #f59e0b;
+            color: #fff;
+        }
+
+        .admin_status_pill.approved {
+            background: #10b981;
+            color: #fff;
+        }
+
     .offer_description {
         color: #ccc;
         line-height: 1.7;
@@ -227,6 +246,12 @@
         border-radius: 15px;
         text-align: center;
         font-weight: 700;
+    }
+
+    .rejected {
+        border: 1px solid #ff4d4d;
+        color: #ff4d4d;
+        background: rgba(255, 77, 77, 0.05);
     }
 
     .expired {

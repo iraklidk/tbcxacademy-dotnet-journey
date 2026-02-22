@@ -1,5 +1,5 @@
-﻿using Application.DTOs.Coupon;
-using FluentValidation;
+﻿using FluentValidation;
+using Application.DTOs.Coupon;
 
 public class CreateCouponDtoValidator : AbstractValidator<CreateCouponDto>
 {

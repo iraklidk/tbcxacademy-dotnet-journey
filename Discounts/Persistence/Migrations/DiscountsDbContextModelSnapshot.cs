@@ -56,7 +56,7 @@ namespace Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<string>("CustomerName")
@@ -484,8 +484,7 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entities.Customer", "Customer")
                         .WithMany("Coupons")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Domain.Entities.Offer", "Offer")
                         .WithMany("Coupons")

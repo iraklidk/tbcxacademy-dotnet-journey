@@ -1,8 +1,8 @@
-﻿using API.Infrastructure.SwaggerExamples;
-using Application.Interfaces.Services;
-using Swashbuckle.AspNetCore.Filters;
+﻿using Application.DTOs.Coupon;
 using Microsoft.AspNetCore.Mvc;
-using Application.DTOs.Coupon;
+using Swashbuckle.AspNetCore.Filters;
+using Application.Interfaces.Services;
+using API.Infrastructure.SwaggerExamples;
 
 namespace API.Controllers;
 
@@ -14,11 +14,7 @@ namespace API.Controllers;
 public class CouponController : ControllerBase
 {
     private readonly ICouponService _couponService;
-
-    public CouponController(ICouponService couponService)
-    {
-        _couponService = couponService;
-    }
+    public CouponController(ICouponService couponService) => _couponService = couponService;
 
     /// <summary>
     /// Get coupon by identifier.
