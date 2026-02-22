@@ -1,11 +1,11 @@
-﻿using Application.DTOs.GlobalSettings;
-using Application.Interfaces.Repos;
-using Application.Services;
-using Discounts.Application.Exceptions;
-using Domain.Entities;
-using FluentAssertions;
 using Moq;
 using Xunit;
+using Domain.Entities;
+using FluentAssertions;
+using Application.Services;
+using Application.Interfaces.Repos;
+﻿using Application.DTOs.GlobalSettings;
+using Discounts.Application.Exceptions;
 
 namespace Application.Tests.Services;
 
