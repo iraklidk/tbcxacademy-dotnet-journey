@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Web": {
+      "commandName": "Project",
+      "authenticationMode": "None"
+    }
+  }
+}

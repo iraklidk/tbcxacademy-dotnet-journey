@@ -1,0 +1,228 @@
+﻿@{
+    ViewData["Title"] = "Customer Panel";
+}
+
+<section class="home show">
+    <div class="form_container customer_dashboard">
+
+        <h2 class="section_title">Customer Panel</h2>
+
+        <div class="balance_indicator">
+            <div class="balance_header">Account Balance</div>
+            <div class="balance_amount">$@ViewBag.Balance</div>
+        </div>
+
+        <div class="dashboard_panels">
+
+            <a asp-controller="Customer" asp-action="Browse" class="panel" target="_blank">
+                <i class="uil uil-search"></i>
+                <span>Browse & Search</span>
+            </a>
+
+            <a asp-controller="Customer" asp-action="MyCoupons" class="panel">
+                <i class="uil uil-ticket"></i>
+                <span>My Coupons</span>
+            </a>
+
+            <a asp-controller="Customer" asp-action="Reservations" class="panel">
+                <i class="uil uil-ticket"></i>
+                <span>My Reservations</span>
+            </a>
+
+        </div>
+
+        <form asp-controller="Account" asp-action="Logout" method="post" class="logout_form">
+            <button type="submit" class="logout_button">Sign Out</button>
+        </form>
+
+                <form asp-controller="Home" asp-action="Index" method="get" class="main_pg">
+            <button type="submit" class="main_button">Main Page</button>
+        </form>
+
+    </div>
+</section>
+
+<style>
+    .section_title {
+        text-align: center;
+        margin-bottom: 35px;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        background: linear-gradient(to right, #fff, #a5a5ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 5px 15px rgba(165, 165, 255, 0.2);
+    }
+
+    .section_title {
+        text-align: center;
+        margin-bottom: 35px;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        background: linear-gradient(to right, #fff, #a5a5ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 5px 15px rgba(165, 165, 255, 0.2);
+    }
+
+    .balance_indicator {
+        max-width: 300px;
+        margin: 0 auto 35px auto;
+        padding: 20px 30px;
+        border-radius: 18px;
+        background: rgba(45, 45, 85, 0.85);
+        backdrop-filter: blur(15px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.35), 0 0 15px rgba(70,50,120,0.25) inset;
+        text-align: center;
+        color: #fff;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .balance_indicator:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.45), 0 0 20px rgba(95,65,180,0.35) inset;
+        }
+
+    .balance_header {
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        color: #a5a5ff;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    .balance_amount {
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        background: linear-gradient(to right, #fff, #a5a5ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 4px 12px rgba(165,165,255,0.2);
+    }
+
+    .customer_dashboard {
+        max-width: 700px;
+        padding: 40px;
+        border-radius: 18px;
+        background: rgba(25, 25, 50, 0.85);
+        backdrop-filter: blur(15px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+        position: center;
+    }
+
+        .customer_dashboard h2 {
+            text-align: center;
+            margin-bottom: 35px;
+            color: #f0f0ff;
+            font-weight: 600;
+        }
+
+    .dashboard_panels {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        justify-content: center;
+    }
+
+    .panel {
+        flex: 1 1 150px;
+        max-width: 160px;
+        min-height: 160px;
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: linear-gradient(145deg, rgba(45, 45, 85, 0.85) 0%, rgba(70, 50, 120, 0.85) 50%, rgba(45, 45, 85, 0.85) 100%);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.3), 0 0 15px rgba(50, 60, 120, 0.3) inset;
+        transition: all 0.3s ease;
+        padding: 25px 15px;
+        color: rgba(255,255,255,0.9);
+        text-decoration: none;
+    }
+
+        .panel i {
+            font-size: 36px;
+            margin-bottom: 12px;
+            color: rgba(255,255,255,0.95);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+        }
+
+        .panel,
+        .panel * {
+            text-decoration: none !important;
+        }
+
+            .panel span {
+                font-size: 14px;
+                font-weight: 500;
+                color: rgba(255,255,255,0.9);
+                text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            }
+
+            .panel:hover {
+                transform: translateY(-6px) scale(1.05);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(70, 90, 180, 0.4) inset;
+                background: linear-gradient( 145deg, rgba(60, 50, 120, 0.9) 0%, rgba(80, 70, 180, 0.9) 50%, rgba(60, 50, 120, 0.9) 100% );
+                color: rgba(255,255,255,1);
+                text-decoration: none;
+            }
+
+    .logout_form {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .logout_button {
+        background: #ff4b5c;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+        .logout_button:hover {
+            background: #ff2a3c;
+            transform: scale(1.05);
+        }
+
+    .main_pg {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+
+    .main_button {
+        background: linear-gradient(145deg, rgba(45,45,85,0.85) 0%, rgba(70,50,120,0.85) 50%, rgba(45,45,85,0.85) 100%);
+        color: rgba(255,255,255,0.95);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-weight: 500;
+        font-size: 14px;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 10px rgba(70,50,120,0.3) inset;
+        transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+    }
+
+        .main_button:hover {
+            transform: translateY(-2px) scale(1.05);
+            background: linear-gradient(145deg, rgba(60,45,120,0.9) 0%, rgba(95,65,180,0.9) 50%, rgba(60,45,120,0.9) 100%);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 15px rgba(95,65,180,0.4) inset;
+            color: rgba(255,255,255,1);
+        }
+</style>

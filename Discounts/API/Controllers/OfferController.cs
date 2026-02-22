@@ -1,0 +1,96 @@
+﻿using Application.DTOs.Offer;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Filters;
+using Application.Interfaces.Services;
+using API.Infrastructure.SwaggerExamples;
+using Microsoft.AspNetCore.Authorization;
+
+namespace API.Controllers;
+
+/// <summary>
+/// Provides endpoints for managing offers.
+/// </summary>
+[ApiController]
+[Route("api/[controller]")]
+public class OfferController : ControllerBase
+{
+    private readonly IOfferService _offerService;
+    public OfferController(IOfferService offerService) => _offerService = offerService;
+
+    /// <summary>
+    /// Get all offers.
+    /// </summary>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>List of all offers.</returns>
+    [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<OfferDto>), 200)]
+    public async Task<IActionResult> GetAll(CancellationToken ct)
+    {
+        var offers = await _offerService.GetAllWithCategoryNamesAsync(ct).ConfigureAwait(false);
+        return Ok(offers);
+    }
+
+    /// <summary>
+    /// Get offer by identifier.
+    /// </summary>
+    /// <param name="id">Offer identifier.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>Offer details.</returns>
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(OfferDto), 200)]
+    [ProducesResponseType(404)]
+    [SwaggerResponseExample(200, typeof(OfferDtoExample))]
+    [SwaggerRequestExample(typeof(CreateOfferDto), typeof(CreateOfferDtoExample))]
+    [SwaggerResponseExample(201, typeof(OfferDtoExample))]
+    public async Task<IActionResult> GetById(int id, CancellationToken ct)
+    {
+        var offer = await _offerService.GetByIdAsync(id, ct).ConfigureAwait(false);
+        return Ok(offer);
+    }
+
+    /// <summary>
+    /// Create a new offer.
+    /// </summary>
+    /// <param name="dto">Offer creation details.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>The created offer.</returns>
+    [HttpPost]
+    [ProducesResponseType(typeof(OfferDto), 201)]
+    [ProducesResponseType(400)]
+    public async Task<IActionResult> Create([FromBody] CreateOfferDto dto, CancellationToken ct)
+    {
+        var createdOffer = await _offerService.CreateOfferAsync(dto, ct).ConfigureAwait(false);
+        return CreatedAtAction(nameof(GetById), new { id = createdOffer.Id }, createdOffer);
+    }
+
+    /// <summary>
+    /// Update an existing offer.
+    /// </summary>
+    /// <param name="dto">Updated offer details.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>No content if update is successful.</returns>
+    [HttpPut]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(404)]
+    public async Task<IActionResult> Update([FromBody] UpdateOfferDto dto, CancellationToken ct)
+    {
+        await _offerService.UpdateOfferAsync(dto, ct).ConfigureAwait(false);
+        return NoContent();
+    }
+
+    /// <summary>
+    /// Delete an offer by identifier.
+    /// </summary>
+    /// <param name="id">Offer identifier.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>No content if deletion is successful.</returns>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(404)]
+    public async Task<IActionResult> Delete(int id, CancellationToken ct)
+    {
+        await _offerService.DeleteOfferAsync(id, ct).ConfigureAwait(false);
+        return NoContent();
+    }
+}

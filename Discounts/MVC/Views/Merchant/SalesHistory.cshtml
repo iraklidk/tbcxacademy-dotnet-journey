@@ -1,0 +1,215 @@
+﻿@model List<Application.DTOs.Coupon.CouponDto>
+
+@{
+    ViewData["Title"] = "Sales History";
+}
+
+<section class="home show">
+    <div class="form_container admin_dashboard">
+
+        <a asp-controller="Merchant" asp-action="Index" class="dashboard_btn">
+            <i class="uil uil-apps"></i> Panel
+        </a>
+
+        <h2 class="section_title">Sales History</h2>
+
+        <div class="content_area">
+            <div class="sales_table_container">
+                <table class="sales_table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Coupon Code</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="scrollable_tbody">
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var coupon in Model)
+                            {
+                                <tr>
+                                    <td>@coupon.CustomerName</td>
+                                    <td>@coupon.Code</td>
+                                    <td>@(coupon.PurchasedAt.ToString("yyyy-MM-dd") ?? "N/A")</td>
+                                    <td>
+                                        @if (coupon.Status == Domain.Constants.CouponStatus.Used)
+                                        {
+                                            <span class="status_used">Used</span>
+                                        }
+                                        else if(coupon.Status == Domain.Constants.CouponStatus.Expired)
+                                        {
+                                            <span class="status_used">Expired</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="status_active">Active</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 50px; color: #8a8ab0;">
+                                    No sales records found.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section_title {
+        text-align: center;
+        margin-bottom: 35px;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        background: linear-gradient(to right, #fff, #a5a5ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 5px 15px rgba(165, 165, 255, 0.2);
+    }
+
+    .section_title {
+        text-align: center;
+        margin-bottom: 35px;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        background: linear-gradient(to right, #fff, #a5a5ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 5px 15px rgba(165, 165, 255, 0.2);
+    }
+
+    .admin_dashboard {
+        justify-content: center;
+        max-width: 850px;
+        width: 95%;
+        margin: 20px auto;
+        padding: 40px;
+        border-radius: 18px;
+        background: rgba(25,25,50,0.85);
+        backdrop-filter: blur(15px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+        position: center;
+        overflow: hidden; 
+    }
+
+        .admin_dashboard h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #f0f0ff;
+            font-weight: 600;
+        }
+
+    .dashboard_btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: linear-gradient(145deg, rgba(45,45,85,0.85), rgba(70,50,120,0.85), rgba(45,45,85,0.85));
+        padding: 10px 20px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #fff !important;
+        font-weight: 500;
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 10px rgba(70,50,120,0.3) inset;
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+
+        .dashboard_btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            background: linear-gradient(145deg, rgba(60,45,120,0.9), rgba(95,65,180,0.9), rgba(60,45,120,0.9));
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+    .sales_table_container {
+        width: 100%;
+        max-height: 400px;
+        overflow-y: auto;
+        border-radius: 12px;
+        background: rgba(45,45,85,0.75);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+        .sales_table_container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sales_table_container::-webkit-scrollbar-track {
+            background: rgba(25, 25, 50, 0.5);
+        }
+
+        .sales_table_container::-webkit-scrollbar-thumb {
+            background: #5f41b4;
+            border-radius: 10px;
+        }
+
+    .sales_table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .sales_table thead th {
+            position: sticky;
+            top: 0;
+            background: #463278;
+            z-index: 2;
+            padding: 14px 20px;
+            text-align: left;
+            color: #f0f0ff;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .sales_table td {
+            padding: 14px 20px;
+            color: #f0f0ff;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .sales_table tr:nth-child(even) {
+            background: rgba(60,45,120,0.4);
+        }
+
+        .sales_table tr:hover {
+            background: rgba(95,65,180,0.5);
+        }
+
+    .status_used {
+        color: #aaa;
+    }
+
+    .status_active {
+        color: #4caf50;
+        font-weight: bold;
+    }
+
+    .status_expired {
+        color: #f44336;
+    }
+
+    .form_container a {
+        color: white;
+    }
+
+        .form_container a:hover {
+            text-decoration: none;
+        }
+</style>
