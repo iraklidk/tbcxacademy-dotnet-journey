@@ -1,0 +1,308 @@
+﻿@model MVC.Models.Offer.OfferViewModel
+@using Domain.Constants
+
+@{
+    ViewData["Title"] = "Offer Details";
+
+    bool isExpired = Model.Status == OfferStatus.Expired || Model.EndDate < DateTime.UtcNow;
+    bool isSoldOut = Model.RemainingCoupons <= 0;
+
+    double discountAmount = (double)(Model.OriginalPrice - Model.DiscountedPrice);
+    double salePercentage = (discountAmount / (double)Model.OriginalPrice) * 100;
+}
+
+<section class="offer_details_section">
+    <div class="offer_details_card">
+
+        <div class="card_header">
+            <span class="category_badge">@Model.Category</span>
+            @if (Model.Status == OfferStatus.Expired)
+            {
+                <div class="admin_status_pill @Model.Status.ToString().ToLower()">@Model.Status</div>
+            }
+            <h2 class="offer_title">@Model.Title</h2>
+        </div>
+
+        <div class="card_body">
+            <p class="offer_description">@Model.Description</p>
+
+            <div class="pricing_row">
+                <div class="price_tag">
+                    <span class="discount_price">@Model.DiscountedPrice.ToString("C")</span>
+                    <span class="original_price">@Model.OriginalPrice.ToString("C")</span>
+                </div>
+                <div class="savings_pill">
+                    @salePercentage.ToString("0")% OFF
+                </div>
+            </div>
+
+            @if (!isExpired)
+            {
+                <div class="stats_grid">
+                    <div class="stat_item">
+                        <span class="stat_label">Remaining</span>
+                        <span class="stat_value">@Model.RemainingCoupons / @Model.TotalCoupons</span>
+                    </div>
+
+                    <div class="stat_item">
+                        <span class="stat_label">Ends On</span>
+                        <span class="stat_value">@Model.EndDate.ToString("dd MMM yyyy")</span>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="offer_action">
+            @if (isExpired)
+            {
+                <div class="status_banner expired">
+                    <i class="fas fa-clock"></i> EXPIRED: @Model.EndDate.ToString("dd MMM yyyy")
+                </div>
+            }
+            else if (isSoldOut)
+            {
+                <div class="status_banner sold_out">
+                    <i class="fas fa-exclamation-circle"></i> SOLD OUT
+                </div>
+            }
+            else
+            {
+                <div class="button_grid_container">
+                    @if (Model.IsReserved)
+                    {
+                        <div class="btn btn_reserved_static">
+                            ✅ Reserved
+                        </div>
+                    }
+                    else
+                    {
+                        <form asp-controller="Customer" asp-action="Reserve" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="offerId" value="@Model.Id" />
+                            <button type="submit" class="btn btn_reserve">
+                                <span class="btn_icon">⏳</span> Reserve
+                            </button>
+                        </form>
+                    }
+
+                    <form asp-controller="Customer" asp-action="Buy" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="offerId" value="@Model.Id" />
+                        <button type="submit" class="btn btn_buy">
+                            <span class="btn_icon">🛍️</span> Buy Coupon
+                        </button>
+                    </form>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    .offer_details_section {
+        font-family: 'Inter', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+        min-height: 100vh;
+        background: radial-gradient(circle at top left, #1a1a2e, #16213e);
+        color: #fff;
+    }
+
+    .admin_status_pill {
+        float: right;
+        font-size: 11px;
+        padding: 4px 12px;
+        border-radius: 6px;
+        text-transform: uppercase;
+        font-weight: 800;
+    }
+
+        .admin_status_pill.pending {
+            background: #f59e0b;
+            color: #fff;
+        }
+
+        .admin_status_pill.approved {
+            background: #10b981;
+            color: #fff;
+        }
+
+    .offer_details_card {
+        width: 100%;
+        max-width: 600px;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 40px;
+        border-radius: 30px;
+        box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    }
+
+    .category_badge {
+        background: rgba(125, 42, 232, 0.2);
+        color: #a370f7;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+
+    .offer_title {
+        font-size: 32px;
+        margin-top: 10px;
+        font-weight: 700;
+        background: linear-gradient(to right, #fff, #bbb);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .offer_description {
+        color: #ccc;
+        line-height: 1.8;
+        margin: 20px 0;
+    }
+
+    .pricing_row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+
+    .discount_price {
+        font-size: 36px;
+        font-weight: 700;
+        color: #00d2ff;
+    }
+
+    .original_price {
+        text-decoration: line-through;
+        color: #777;
+        margin-left: 10px;
+    }
+
+    .savings_pill {
+        background: #e63946;
+        color: white;
+        padding: 6px 14px;
+        border-radius: 10px;
+        font-weight: 800;
+        font-size: 14px;
+        box-shadow: 0 0 15px rgba(230, 57, 70, 0.4);
+    }
+
+    .stats_grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .stat_item {
+        background: rgba(255,255,255,0.05);
+        padding: 15px;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+    .stat_label {
+        display: block;
+        font-size: 11px;
+        color: #888;
+        text-transform: uppercase;
+    }
+
+    .stat_value {
+        font-weight: 600;
+    }
+
+    .button_grid_container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        width: 100%;
+    }
+
+        .button_grid_container form {
+            margin: 0;
+            display: flex;
+        }
+
+    .btn {
+        width: 100%;
+        height: 56px;
+        border-radius: 15px;
+        border: none;
+        font-weight: 700;
+        font-size: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn_reserve {
+        background: transparent;
+        border: 2px solid #7d2ae8;
+        color: #fff;
+        cursor: pointer;
+    }
+
+        .btn_reserve:hover {
+            background: #7d2ae8;
+            box-shadow: 0 0 15px rgba(125, 42, 232, 0.3);
+        }
+
+    .btn_reserved_static {
+        background: rgba(125, 42, 232, 0.1);
+        border: 2px solid rgba(125, 42, 232, 0.5);
+        color: #a370f7;
+        cursor: default;
+    }
+
+    .btn_buy {
+        background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+        color: white;
+        cursor: pointer;
+    }
+
+        .btn_buy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+        }
+
+    .status_banner {
+        width: 100%;
+        padding: 18px;
+        border-radius: 15px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .expired {
+        border: 1px solid #ff4d4d;
+        color: #ff4d4d;
+        background: rgba(255, 77, 77, 0.05);
+    }
+
+    .rejected {
+        border: 1px solid #ff4d4d;
+        color: #ff4d4d;
+        background: rgba(255, 77, 77, 0.05);
+    }
+
+    .sold_out {
+        border: 1px solid #dc3545;
+        color: #dc3545;
+        background: rgba(220, 53, 69, 0.05);
+    }
+</style>

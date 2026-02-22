@@ -28,8 +28,8 @@ builder.Services.AddLibraryApiVersioning();
 
 var app = builder.Build();
 
-app.RegisterMiddlewares();
-
 await app.InitializeDatabaseAsync();
+
+app.RegisterMiddlewares();
 
 app.Run();

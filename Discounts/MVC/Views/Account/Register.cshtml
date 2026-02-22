@@ -1,0 +1,140 @@
+﻿@model MVC.Models.Customer.CustomerRegisterViewModel
+
+<section class="home show">
+    <div class="form_container @(ViewBag.FormActive == true ? "active" : "active")">
+        <i class="uil uil-times form_close"></i>
+
+        <div class="form signup_form">
+            <form asp-action="Register" method="post">
+                <h2>Signup</h2>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+                <div class="input_box">
+                    <input asp-for="Email" placeholder="Enter your email" />
+                    <i class="uil uil-envelope-alt email"></i>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="input_box">
+                    <input asp-for="Firstname" placeholder="First Name" />
+                    <i class="uil uil-user user"></i>
+                    <span asp-validation-for="Firstname" class="text-danger"></span>
+                </div>
+
+                <div class="input_box">
+                    <input asp-for="Lastname" placeholder="Last Name" />
+                    <i class="uil uil-user user"></i>
+                    <span asp-validation-for="Lastname" class="text-danger"></span>
+                </div>
+
+                <div class="input_box">
+                    <input asp-for="UserName" placeholder="Create username" />
+                    <i class="uil uil-user user"></i>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="input_box">
+                    <input asp-for="PhoneNumber" placeholder="Phone number" />
+                    <i class="uil uil-phone-alt email"></i>
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="input_box">
+                    <input asp-for="Password" type="password" placeholder="Create password" />
+                    <i class="uil u-lock password"></i>
+                    <i class="uil uil-eye-slash pw_hide"></i>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="input_box">
+                    <input asp-for="ConfirmPassword" type="password" placeholder="Confirm password" />
+                    <i class="uil uil-lock password"></i>
+                    <i class="uil uil-eye-slash pw_hide"></i>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="button lgn_btn">Signup Now</button>
+
+                <a asp-controller="Account"
+                   asp-action="RegisterMerchant"
+                   class="button lgn_btn merchant_btn">
+                    Merchant Registration
+                </a>
+
+                <div class="login_signup mt-2">
+                    Already have an account? <a asp-action="Login">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    a.lgn_btn {
+        display: block;
+        width: 100%;
+        background: #4f46e5;
+        color: #fff;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        text-align: center;
+        text-decoration: none;
+    }
+
+    a.lgn_btn:active {
+        transform: scale(0.98);
+    }
+
+        a.lgn_btn:hover {
+            text-decoration: none;
+            transform: scale(1.02);
+            filter: brightness(1.1);
+            color: #fff;
+        }
+
+    .lgn_btn {
+        display: block;
+        width: 100%;
+        background: #4f46e5;
+        color: #fff;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        text-align: center;
+        text-decoration: none;
+        margin-bottom: -10px;
+    }
+
+        .lgn_btn:active {
+            transform: scale(0.98);
+        }
+
+        .lgn_btn:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+            color: #fff;
+        }
+
+    .login_signup {
+        margin-top: 30px;
+    }
+
+.merchant_btn {
+    margin-top: 5px;
+}
+
+</style>

@@ -1,0 +1,175 @@
+﻿@{
+    ViewData["Title"] = "Admin Panel";
+}
+
+<section class="home show">
+    <div class="form_container admin_dashboard">
+
+        <h2 class="section_title">Admin Panel</h2>
+
+        <div class="dashboard_panels">
+            <a asp-controller="Admin" asp-action="Users" class="panel">
+                <i class="uil uil-users-alt"></i>
+                <span>User Management</span>
+            </a>
+
+            <a asp-controller="Admin" asp-action="DiscountsPending" class="panel">
+                <i class="uil uil-ticket"></i>
+                <span>Pending Discounts</span>
+            </a>
+
+            <a asp-controller="Admin" asp-action="Settings" class="panel">
+                <i class="uil uil-setting"></i>
+                <span>Global Settings</span>
+            </a>
+
+            <a asp-controller="Admin" asp-action="Categories" class="panel">
+                <i class="uil uil-list-ul"></i>
+                <span>Category Management</span>
+            </a>
+        </div>
+
+        <form asp-controller="Account" asp-action="Logout" method="post" class="logout_form">
+            <button type="submit" class="logout_button">Sign Out</button>
+        </form>
+
+        <form asp-controller="Home" asp-action="Index" method="get" class="main_pg">
+            <button type="submit" class="main_button">Main Page</button>
+        </form>
+
+    </div>
+</section>
+
+<style>
+    .admin_dashboard {
+        max-width: 700px;
+        padding: 40px;
+        border-radius: 18px;
+        background: rgba(25, 25, 50, 0.85);
+        backdrop-filter: blur(15px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+        position: relative;
+    }
+
+        .admin_dashboard h2 {
+            text-align: center;
+            margin-bottom: 35px;
+            color: #f0f0ff;
+            font-weight: 600;
+        }
+
+    .dashboard_panels {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        justify-content: center;
+    }
+
+    .section_title {
+        text-align: center;
+        margin-bottom: 35px;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        background: linear-gradient(to right, #fff, #a5a5ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 5px 15px rgba(165, 165, 255, 0.2);
+    }
+
+    .panel {
+        flex: 1 1 150px;
+        max-width: 160px;
+        min-height: 160px;
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: linear-gradient(145deg, rgba(45, 45, 85, 0.85) 0%, rgba(70, 50, 120, 0.85) 50%, rgba(45, 45, 85, 0.85) 100%);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.3), 0 0 15px rgba(70, 50, 120, 0.3) inset;
+        transition: all 0.3s ease;
+        padding: 25px 15px;
+        color: rgba(255,255,255,0.9);
+        text-decoration: none;
+    }
+
+        .panel i {
+            text-decoration: none;
+            font-size: 36px;
+            margin-bottom: 12px;
+            color: rgba(255,255,255,0.95);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+        }
+
+        .panel span {
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+
+        .panel:hover {
+            text-decoration: none;
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(120, 80, 180, 0.4) inset;
+            background: linear-gradient(145deg, rgba(60, 45, 120, 0.9) 0%, rgba(95, 65, 180, 0.9) 50%, rgba(60, 45, 120, 0.9) 100%);
+            color: rgba(255,255,255,1);
+        }
+
+    .logout_form {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .logout_button {
+        background: #ff4b5c;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+        .logout_button:hover {
+            background: #ff2a3c;
+            transform: scale(1.05);
+        }
+
+    .main_button {
+        background: linear-gradient(145deg, rgba(45,45,85,0.85) 0%, rgba(70,50,120,0.85) 50%, rgba(45,45,85,0.85) 100%);
+        color: rgba(255,255,255,0.95);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-weight: 500;
+        font-size: 14px;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 10px rgba(70,50,120,0.3) inset;
+        transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+    }
+
+        .main_button:hover {
+            transform: translateY(-2px) scale(1.05);
+            background: linear-gradient(145deg, rgba(60,45,120,0.9) 0%, rgba(95,65,180,0.9) 50%, rgba(60,45,120,0.9) 100%);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 15px rgba(95,65,180,0.4) inset;
+            color: rgba(255,255,255,1);
+        }
+
+    .panel,
+    .panel:visited,
+    .panel:hover,
+    .panel:focus,
+    .panel:active {
+        text-decoration: none !important;
+    }
+</style>
