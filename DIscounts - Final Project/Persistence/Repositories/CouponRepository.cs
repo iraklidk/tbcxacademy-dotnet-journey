@@ -16,7 +16,7 @@ public class CouponRepository : BaseRepository<Coupon>, ICouponRepository
         => _context.Coupons.Where(c => c.OfferId == offerId).Include(c => c.Offer).ToListAsync(ct);
 
     public Task<List<Coupon>> GetCouponsByMerchantIdAsync(int merchantId, CancellationToken ct = default)
-        => _context.Coupons.Include(c => c.Offer).Where(c => c.Offer.MerchantId == merchantId).ToListAsync(ct);
+        => _context.Coupons.Where(c => c.MerchantId == merchantId).ToListAsync(ct);
 
     public Task<List<Coupon?>> GetByCustomerAsync(int customerId, CancellationToken ct = default)
         => _context.Coupons.Include(c => c.Customer).Where(c => c.CustomerId == customerId).ToListAsync(ct);

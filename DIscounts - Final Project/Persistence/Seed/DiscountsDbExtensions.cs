@@ -3,8 +3,8 @@ using Domain.Constants;
 using Persistence.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Discounts.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using Discounts.Persistence.Context;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Discounts.Persistence.Seeding;
@@ -21,8 +21,7 @@ public static class DiscountsDbExtensions
         if (await context.Users.AnyAsync(ct).ConfigureAwait(false))
             return app;
 
-        await context.SaveChangesAsync(ct).ConfigureAwait(false);
-
+        // Seed roles
         var roles = new[] { "Admin", "Merchant", "Customer" };
         foreach (var role in roles)
         {
@@ -30,6 +29,7 @@ public static class DiscountsDbExtensions
                 await roleManager.CreateAsync(new IdentityRole<int>(role)).ConfigureAwait(false);
         }
 
+        // Seed Admin
         var adminUser = new User
         {
             UserName = "admin",
@@ -39,6 +39,7 @@ public static class DiscountsDbExtensions
         await userManager.CreateAsync(adminUser, "last").ConfigureAwait(false);
         await userManager.AddToRoleAsync(adminUser, "Admin").ConfigureAwait(false);
 
+        // Seed categories
         var categories = new[]
         {
                 new Category { Name = "Food", Description = "Food & Drinks" },
@@ -49,6 +50,7 @@ public static class DiscountsDbExtensions
         await context.SaveChangesAsync(ct).ConfigureAwait(false);
         var allCategories = await context.Categories.ToListAsync(ct).ConfigureAwait(false);
 
+        // Seed merchants & Offers
         var merchants = new List<Merchant>();
         for (var i = 1; i <= 5; i++)
         {
@@ -92,6 +94,7 @@ public static class DiscountsDbExtensions
             await context.SaveChangesAsync(ct).ConfigureAwait(false);
         }
 
+        // Seed customers
         var customers = new List<Customer>();
         for (var i = 1; i <= 5; i++)
         {
@@ -112,40 +115,12 @@ public static class DiscountsDbExtensions
                 Balance = (decimal)5000
             };
             context.Customers.Add(customer);
+            await context.SaveChangesAsync(ct).ConfigureAwait(false);
             customers.Add(customer);
         }
         await context.SaveChangesAsync(ct).ConfigureAwait(false);
 
-        var allOffers = await context.Offers.ToListAsync(ct).ConfigureAwait(false);
-        var rnd = new Random();
-
-        foreach (var customer in customers)
-        {
-            for (var c = 1; c <= 2; c++)
-            {
-                var offer = allOffers[rnd.Next(allOffers.Count)];
-                context.Coupons.Add(new Coupon
-                {
-                    Code = $"C-{customer.Id}-{c}-{Guid.NewGuid().ToString().Substring(0, 5)}",
-                    Status = CouponStatus.Active,
-                    CustomerId = customer.Id,
-                    CustomerName = $"{customer.Firstname} {customer.Lastname}",
-                    OfferId = offer.Id,
-                    PurchasedAt = DateTime.UtcNow,
-                    ExpirationDate = DateTime.UtcNow.AddDays(30)
-                });
-            }
-
-            var reservedOffer = allOffers[rnd.Next(allOffers.Count)];
-            context.Reservations.Add(new Reservation
-            {
-                CustomerId = customer.Id,
-                OfferId = reservedOffer.Id,
-                ReservedAt = DateTime.UtcNow,
-                ExpiresAt = DateTime.UtcNow.AddHours(2)
-            });
-        }
-
+        // Seed GlobalSettings
         if (!await context.GlobalSettings.AnyAsync(ct).ConfigureAwait(false))
         {
             context.GlobalSettings.Add(new GlobalSettings
@@ -156,10 +131,10 @@ public static class DiscountsDbExtensions
         }
 
         await context.SaveChangesAsync(ct).ConfigureAwait(false);
-
         return app;
     }
 
+    // Resets database
     public static async Task ResetDbAsync(this DiscountsDbContext context, CancellationToken ct = default)
     {
         var userRoles = await context.Set<IdentityUserRole<int>>().ToListAsync(ct).ConfigureAwait(false);

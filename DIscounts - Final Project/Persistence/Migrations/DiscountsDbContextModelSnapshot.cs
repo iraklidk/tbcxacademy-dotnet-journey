@@ -66,6 +66,9 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MerchantId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("OfferId")
                         .HasColumnType("int");
 

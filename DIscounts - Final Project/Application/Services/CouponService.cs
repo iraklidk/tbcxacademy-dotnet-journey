@@ -81,6 +81,7 @@ public class CouponService : ICouponService
 
         var coupon = new Coupon
         {
+            MerchantId = offer.MerchantId,
             CustomerName = $"{customer.Firstname} {customer.Lastname}",
             CustomerId = customer.Id,
             Code = $"C-{dto.UserId}-{offer.MerchantId}-{Guid.NewGuid().ToString("N").Substring(0, 3).ToUpper()}",

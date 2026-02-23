@@ -10,6 +10,8 @@ public class Coupon
 
     public string CustomerName { get; set; } = null!;
 
+    public int MerchantId { get; set; }
+
     public int? CustomerId { get; set; }
 
     public Customer? Customer { get; set; } = null!;

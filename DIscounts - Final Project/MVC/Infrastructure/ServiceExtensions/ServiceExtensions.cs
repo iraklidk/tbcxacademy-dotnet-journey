@@ -1,7 +1,6 @@
 ﻿using Worker.DI;
 using Persistence.DI;
 using Application.DI;
-using Identity.SeedROles;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 public static class ServiceExtensions
@@ -38,7 +37,6 @@ public static class ServiceExtensions
         });
 
         app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
-        await app.AddRolesAsync().ConfigureAwait(false);
         if (!app.Environment.IsDevelopment())
         {
             app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
