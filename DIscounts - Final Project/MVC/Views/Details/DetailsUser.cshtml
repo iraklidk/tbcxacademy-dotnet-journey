@@ -68,30 +68,34 @@
             else
             {
                 <div class="button_grid_container">
-                    @if (Model.IsReserved)
+                    @if (@Model.Status == OfferStatus.Approved)
                     {
-                        <div class="btn btn_reserved_static">
-                            ✅ Reserved
-                        </div>
-                    }
-                    else
-                    {
-                        <form asp-controller="Customer" asp-action="Reserve" method="post">
+
+                        @if (Model.IsReserved)
+                        {
+                            <div class="btn btn_reserved_static">
+                                ✅ Reserved
+                            </div>
+                        }
+                        else
+                        {
+                            <form asp-controller="Customer" asp-action="Reserve" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="offerId" value="@Model.Id" />
+                                <button type="submit" class="btn btn_reserve">
+                                    <span class="btn_icon">⏳</span> Reserve
+                                </button>
+                            </form>
+                        }
+
+                        <form asp-controller="Customer" asp-action="Buy" method="post">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="offerId" value="@Model.Id" />
-                            <button type="submit" class="btn btn_reserve">
-                                <span class="btn_icon">⏳</span> Reserve
+                            <button type="submit" class="btn btn_buy">
+                                <span class="btn_icon">🛍️</span> Buy Coupon
                             </button>
                         </form>
                     }
-
-                    <form asp-controller="Customer" asp-action="Buy" method="post">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="offerId" value="@Model.Id" />
-                        <button type="submit" class="btn btn_buy">
-                            <span class="btn_icon">🛍️</span> Buy Coupon
-                        </button>
-                    </form>
                 </div>
             }
         </div>
