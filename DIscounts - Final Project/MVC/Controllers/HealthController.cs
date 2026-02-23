@@ -4,11 +4,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 public class HealthController : Controller
 {
     private readonly HealthCheckService _healthCheckService;
-
-    public HealthController(HealthCheckService healthCheckService)
-    {
-        _healthCheckService = healthCheckService;
-    }
+    public HealthController(HealthCheckService healthCheckService) => _healthCheckService = healthCheckService;
 
     [HttpGet("/health")]
     public async Task<IActionResult> Index()

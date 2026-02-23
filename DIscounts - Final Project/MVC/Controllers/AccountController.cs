@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 public class AccountController : Controller
 {
     private readonly IAuthService _authService;
-
     public AccountController(IAuthService authService) => _authService = authService;
 
     #region Auth&Register&Forgotpassword

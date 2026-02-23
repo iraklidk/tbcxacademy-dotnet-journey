@@ -9,7 +9,6 @@ namespace Application.Services;
 public class GlobalSettingsService : IGlobalSettingsService
 {
     private readonly IGlobalSettingsRepository _globalSettingsRepository;
-
     public GlobalSettingsService(IGlobalSettingsRepository globalSettingsRepository)
         => _globalSettingsRepository = globalSettingsRepository;
 
