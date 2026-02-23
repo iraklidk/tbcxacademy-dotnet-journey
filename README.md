@@ -33,5 +33,6 @@ Each folder covers a specific topic or week — from basic syntax and data types
 | 28–30 | **Web API, Dependency Injection** |
 | 30–35 | **Middlewares, Logging, FluentValidation, Swagger UI** |
 | —   | **SQL Tasks** |
-| —   | **Library Management API** |
 | —   | **Midterm SQL** |
+| —   | **Library Management API** |
+| —   | **Discounts - Final Project** |
