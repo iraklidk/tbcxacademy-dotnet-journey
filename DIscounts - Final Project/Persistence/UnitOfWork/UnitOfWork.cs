@@ -9,12 +9,12 @@ public class UnitOfWork : IUnitOfWork
 
     public UnitOfWork(DiscountsDbContext dbContext) => _dbContext = dbContext;
 
-    public async Task BeginTransactionAsync(CancellationToken ct = default)
-        => await _dbContext.Database.BeginTransactionAsync(ct).ConfigureAwait(false);
+    public Task BeginTransactionAsync(CancellationToken ct = default)
+        => _dbContext.Database.BeginTransactionAsync(ct);
 
-    public async Task CommitAsync(CancellationToken ct = default)
-        => await _dbContext.Database.CommitTransactionAsync(ct).ConfigureAwait(false);
+    public Task CommitAsync(CancellationToken ct = default)
+        => _dbContext.Database.CommitTransactionAsync(ct);
 
-    public async Task RollbackAsync(CancellationToken ct = default)
-        => await _dbContext.Database.RollbackTransactionAsync(ct).ConfigureAwait(false);
+    public Task RollbackAsync(CancellationToken ct = default)
+        => _dbContext.Database.RollbackTransactionAsync(ct);
 }
