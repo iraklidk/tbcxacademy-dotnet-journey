@@ -12,17 +12,39 @@
 
         <div class="access-message">
             You don’t have permission to view this page.
-            Try signing in again or go back home.
         </div>
 
         <div>
             <a asp-controller="Home" asp-action="Index" class="access-btn btn-primary-custom">
                 Go Home
             </a>
-
-            <a asp-controller="Account" asp-action="Login" class="access-btn btn-outline-custom">
-                Sign In
-            </a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-controller="Admin" asp-action="Index" class="access-btn btn-primary-custom">
+                        Go to Profile
+                    </a>
+                }
+                else if(User.IsInRole("Merchant"))
+                {
+                    <a asp-controller="Merchant" asp-action="Index" class="access-btn btn-primary-custom">
+                        Go to Profile
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Customer" asp-action="Index" class="access-btn btn-primary-custom">
+                        Go to Profile
+                    </a>
+                }
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" class="access-btn btn-outline-custom">
+                    Sign In
+                </a>
+            }
         </div>
 
     </div>

@@ -1,4 +1,5 @@
-﻿@model List<Application.DTOs.Offer.OfferDto>
+﻿@using Domain.Constants
+@model List<Application.DTOs.Offer.OfferDto>
 
 @{
     ViewData["Title"] = "Pending Discounts";
@@ -34,27 +35,32 @@
                                                 @offer.Title
                                             </div>
                                         </td>
-
                                         <td>
                                             <div class="actions_wrapper">
                                                 <a asp-controller="Details"
                                                    asp-action="OfferDetails"
                                                    asp-route-id="@offer.Id"
                                                    class="action_btn details_btn" target="_blank">
-                                                    DETAILS
+                                                    <i class="uil uil-eye"></i> Details
                                                 </a>
 
-                                                <button class="action_btn approve_btn status-update-btn"
-                                                        data-id="@offer.Id"
-                                                        data-status="Approved">
-                                                    APPROVE
-                                                </button>
+                                                <form asp-controller="Admin" asp-action="UpdateStatus" method="post" class="flex-form">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="Id" value="@offer.Id" />
+                                                    <input type="hidden" name="Status" value="@OfferStatus.Approved" />
+                                                    <button type="submit" class="action_btn approve_btn status-update-btn">
+                                                        <i class="uil uil-check-circle"></i> Approve
+                                                    </button>
+                                                </form>
 
-                                                <button class="action_btn reject_btn status-update-btn"
-                                                        data-id="@offer.Id"
-                                                        data-status="Rejected">
-                                                    REJECT
-                                                </button>
+                                                <form asp-controller="Admin" asp-action="UpdateStatus" method="post" class="flex-form">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="Id" value="@offer.Id" />
+                                                    <input type="hidden" name="Status" value="@OfferStatus.Rejected" />
+                                                    <button type="submit" class="action_btn reject_btn status-update-btn">
+                                                        <i class="uil uil-times-circle"></i> Reject
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
@@ -76,53 +82,77 @@
     </div>
 </section>
 
-@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
-@{
-    var tokens = Antiforgery.GetAndStoreTokens(Context);
-}
-
-@section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-
-            $('.status-update-btn').off('click').on('click', function () {
-
-                const btn = $(this);
-                const offerId = btn.data('id');
-                const selectedStatus = btn.data('status');
-                const row = $(`#row-${offerId}`);
-
-                row.find('.action_btn').prop('disabled', true).css('opacity', '0.5');
-
-                const updateDto = {
-                    id: parseInt(offerId),
-                    status: selectedStatus
-                };
-
-                $.ajax({
-                    url: '/Admin/UpdateStatus',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(updateDto),
-                    headers: {
-                        'RequestVerificationToken': '@tokens.RequestToken'
-                    },
-                    success: function () {
-                        row.fadeOut(400, function () { $(this).remove(); });
-                    },
-                    error: function (xhr) {
-                        alert("Error: " + xhr.responseText);
-                        row.find('.action_btn').prop('disabled', false).css('opacity', '1');
-                    }
-                });
-            });
-
-        });
-    </script>
-}
-
 <style>
+    .flex-form {
+        flex: 1;
+        display: flex;
+    }
+
+    .actions_wrapper {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .action_btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 15px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        color: white;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .details_btn {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    }
+
+    .approve_btn {
+        background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);
+    }
+
+    .reject_btn {
+        background: linear-gradient(135deg, #e52d27 0%, #b31217 100%);
+    }
+
+    .action_btn:hover {
+        transform: translateY(-3px);
+        filter: brightness(1.2);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+
+    .approve_btn:hover {
+        box-shadow: 0 0 20px rgba(11, 163, 96, 0.4);
+    }
+
+    .reject_btn:hover {
+        box-shadow: 0 0 20px rgba(229, 45, 39, 0.4);
+    }
+
+    .details_btn:hover {
+        box-shadow: 0 0 20px rgba(37, 117, 252, 0.4);
+    }
+
+    .action_btn i {
+        font-size: 18px;
+    }
+
+    .action_btn:active {
+        transform: translateY(-1px);
+    }
+
     .section_title {
         text-align: center;
         margin-bottom: 35px;
@@ -186,44 +216,6 @@
         font-weight: 600;
         color: #fff;
         text-align: center;
-    }
-
-    .actions_wrapper {
-        display: flex;
-        gap: 10px;
-        width: 100%;
-    }
-
-    .action_btn {
-        flex: 1;
-        text-align: center;
-        padding: 10px 0;
-        border-radius: 10px;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        color: white;
-        text-decoration: none;
-        transition: all 0.25s ease;
-    }
-
-    .details_btn {
-        color: white;
-        background: #f39c12;
-    }
-
-    .approve_btn {
-        background: #149B00;
-    }
-
-    .reject_btn {
-        background: #DB0500;
-    }
-
-    .action_btn:hover {
-        transform: translateY(-3px) scale(1.04);
-        filter: brightness(1.1);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
 
     .dashboard_btn {

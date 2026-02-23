@@ -1,5 +1,4 @@
 ﻿using Domain.Constants;
-
 namespace Application.DTOs.Offer;
 
 public class UpdateOfferStatusDto
