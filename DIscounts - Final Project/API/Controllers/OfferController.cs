@@ -15,7 +15,6 @@ namespace API.Controllers;
 public class OfferController : ControllerBase
 {
     private readonly IOfferService _offerService;
-
     public OfferController(IOfferService offerService) => _offerService = offerService;
 
     /// <summary>

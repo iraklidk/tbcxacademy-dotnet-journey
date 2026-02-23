@@ -37,7 +37,7 @@ public class MerchantController : Controller
     public async Task<IActionResult> SalesHistory(CancellationToken ct = default)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-        var coupons = await _couponService.GetCouponsByMerchantAsync(int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)), ct).ConfigureAwait(false);
+        var coupons = await _couponService.GetCouponsByMerchantAsync(userId, ct).ConfigureAwait(false);
         return View(coupons);
     }
 
