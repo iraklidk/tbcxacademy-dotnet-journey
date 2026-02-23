@@ -1,10 +1,11 @@
-﻿using Mapster;
-using MVC.Models.Offer;
+﻿using System.Security.Claims;
 using Application.DTOs.Offer;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces.Services;
+using Domain.Entities;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MVC.Models.Offer;
 
 [Authorize(Roles = "Merchant")]
 public class MerchantController : Controller
@@ -57,6 +58,7 @@ public class MerchantController : Controller
     public async Task<IActionResult> DeleteOffer(int id, CancellationToken ct = default)
     {
         await _offerService.DeleteOfferAsync(id, ct).ConfigureAwait(false);
+        TempData["SuccessMessage"] = "The offer was deleted successfully.";
         return RedirectToAction(nameof(Offers));
     }
 
@@ -68,6 +70,7 @@ public class MerchantController : Controller
     {
         if (!ModelState.IsValid) return BadRequest(ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
         await _offerService.CreateOfferAsync(model, ct).ConfigureAwait(false);
+        TempData["SuccessMessage"] = "Offer added successfully. Pending admin approval.";
         return RedirectToAction(nameof(Offers));
     }
 
@@ -76,6 +79,7 @@ public class MerchantController : Controller
     {
         if (!ModelState.IsValid) return RedirectToAction(nameof(Offers));
         await _offerService.UpdateOfferAsync(model, ct).ConfigureAwait(false);
+        TempData["SuccessMessage"] = "Offer updated successfully. Waiting for admin approval.";
         return RedirectToAction(nameof(Offers));
     }
     #endregion

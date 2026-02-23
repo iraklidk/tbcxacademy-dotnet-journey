@@ -45,6 +45,7 @@ public class AdminController : Controller
             throw new DomainException("Error updating user!");
         }
         await _userService.UpdateUserAsync(model, ct).ConfigureAwait(false);
+        TempData["SuccessMessage"] = "User account edited successfully!";
         return RedirectToAction(nameof(Users));
     }
 
@@ -52,6 +53,7 @@ public class AdminController : Controller
     public async Task<IActionResult> DeleteUser(int id, CancellationToken ct = default)
     {
         await _userService.DeleteUserAsync(id, ct).ConfigureAwait(false);
+        TempData["SuccessMessage"] = "User deleted!";
         return RedirectToAction(nameof(Users));
     }
 
@@ -74,13 +76,11 @@ public class AdminController : Controller
     [HttpPost]
     public async Task<IActionResult> Settings(UpdateGlobalSettingsDto model, CancellationToken ct = default)
     {
-        if (ModelState.IsValid)
-        {
-            var updateDto = model.Adapt<UpdateGlobalSettingsDto>();
-            await _globalSettingsService.UpdateSettingsAsync(updateDto, ct).ConfigureAwait(false);
-            return Json(new { success = true, message = "Settings updated successfully!" });
-        }
-        return Json(new { success = false, message = "Invalid data." });
+        var updateDto = model.Adapt<UpdateGlobalSettingsDto>();
+        await _globalSettingsService.UpdateSettingsAsync(updateDto, ct).ConfigureAwait(false);
+        TempData["SuccessMessage"] = "Settings updated successfully!";
+        //return RedirectToAction("Settings", "Admin");
+        return View();
     }
     #endregion
 
@@ -102,7 +102,6 @@ public class AdminController : Controller
         }
         await _categoryService.CreateAsync(categoryDto, ct).ConfigureAwait(false);
         TempData["SuccessMessage"] = "Category added successfully!";
-
         return RedirectToAction(nameof(Categories));
     }
 
@@ -110,6 +109,7 @@ public class AdminController : Controller
     public async Task<IActionResult> DeleteCategory(int id, CancellationToken ct = default)
     {
         await _categoryService.DeleteAsync(id, ct).ConfigureAwait(false);
+        TempData["SuccessMessage"] = "Category deleted successfully!";
         return RedirectToAction(nameof(Categories));
     }
 
@@ -122,6 +122,7 @@ public class AdminController : Controller
             return View("Categories", categories);
         }
         await _categoryService.UpdateAsync(dto, ct).ConfigureAwait(false);
+        TempData["SuccessMessage"] = "Category updated successfully!";
         return RedirectToAction(nameof(Categories));
     }
     #endregion
@@ -138,6 +139,7 @@ public class AdminController : Controller
     public async Task<IActionResult> UpdateStatus(UpdateOfferStatusDto viewModel, bool fromDetailsPage, CancellationToken ct = default)
     {
         await _offerService.UpdateStatusAsync(viewModel, ct).ConfigureAwait(false);
+        TempData["SuccessMessage"] = "Offer status updated successfully!";
         return fromDetailsPage ? RedirectToAction("OfferDetails", "Details", new { id = viewModel.Id }) : RedirectToAction(nameof(DiscountsPending));
     }
     #endregion
@@ -146,6 +148,7 @@ public class AdminController : Controller
     public async Task<IActionResult> DeleteOffer(int offerId, CancellationToken ct = default)
     {
         await _offerService.DeleteOfferAsync(offerId, ct).ConfigureAwait(false);
+        TempData["SuccessMessage"] = "Offer deleted successfully!";
         return RedirectToAction("Offers", "Home");
     }
 }

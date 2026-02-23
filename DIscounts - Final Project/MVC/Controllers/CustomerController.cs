@@ -85,6 +85,7 @@ public class CustomerController : Controller
     {
         var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         await _couponService.CreateCouponAsync(new CreateCouponDto { UserId = userId, OfferId = offerId }, ct).ConfigureAwait(false);
+        TempData["SuccessMessage"] = "Your coupon has been generated and added to your profile.";
         return RedirectToAction("OfferDetails", "Details", new { id = offerId });
     }
 
@@ -101,6 +102,7 @@ public class CustomerController : Controller
             await _couponService.CreateCouponAsync(new CreateCouponDto { UserId = userId, OfferId = offerId }, ct).ConfigureAwait(false);
         }
         else { throw new DomainException("Not Enough Money"); }
+        TempData["SuccessMessage"] = "Your coupon has been generated and added to your profile.";
         return RedirectToAction("Reservations", "Customer");
     }
 }
