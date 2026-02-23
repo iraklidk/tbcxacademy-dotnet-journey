@@ -18,9 +18,9 @@ public class Coupon
 
     public DateTime? UsedAt { get; set; }
 
-    public int OfferId { get; set; }
+    public int? OfferId { get; set; }
 
-    public Offer Offer { get; set; } = null!;
+    public Offer? Offer { get; set; } = null!;
 
     public DateTime PurchasedAt { get; set; } = DateTime.UtcNow;
 

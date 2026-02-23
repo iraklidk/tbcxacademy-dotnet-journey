@@ -109,7 +109,7 @@ public static class DiscountsDbExtensions
                 UserId = customerUser.Id,
                 Firstname = $"Customer{i}",
                 Lastname = "Test",
-                Balance = (decimal)100
+                Balance = (decimal)5000
             };
             context.Customers.Add(customer);
             customers.Add(customer);

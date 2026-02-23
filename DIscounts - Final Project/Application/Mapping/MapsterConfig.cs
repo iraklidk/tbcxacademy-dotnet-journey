@@ -12,15 +12,15 @@ public static class MapsterConfig
     public static IServiceCollection RegisterMaps(this IServiceCollection services)
     {
         TypeAdapterConfig<Offer, OfferDto>.NewConfig()
-            .Map(dest => dest.ReservationsCount, src => src.Reservations.Count)
+            .Map(dest => dest.Category, src => src.Category!.Name)
             .Map(dest => dest.MerchantName, src => src.Merchant!.Name)
-            .Map(dest => dest.Category, src => src.Category!.Name);
+            .Map(dest => dest.ReservationsCount, src => src.Reservations.Count);
 
         TypeAdapterConfig<CreateOfferDto, Offer>.NewConfig()
-            .Ignore(dest => dest.Category)
+            .Ignore(dest => dest.Id)
             .Ignore(dest => dest.Updated)
             .Ignore(dest => dest.Created)
-            .Ignore(dest => dest.Id)
+            .Ignore(dest => dest.Category)
             .Map(dest => dest.RemainingCoupons, src => src.TotalCoupons);
 
         TypeAdapterConfig<IdentityUser<int>, UserDto>.NewConfig()
@@ -30,15 +30,14 @@ public static class MapsterConfig
             .Ignore(dest => dest.Created);
 
         TypeAdapterConfig<Merchant, MerchantResponseDto>.NewConfig()
-            .Map(dest => dest.UserId, src => src.UserId)
+            .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.Name, src => src.Name)
-            .Map(dest => dest.Id, src => src.Id);
+            .Map(dest => dest.UserId, src => src.UserId);
 
-        TypeAdapterConfig<Offer, OfferDto>
-            .NewConfig()
-            .Map(dest => dest.ReservationsCount, src => src.Reservations.Count)
+        TypeAdapterConfig<Offer, OfferDto>.NewConfig()
+            .Map(dest => dest.Category, src => src.Category!.Name)
             .Map(dest => dest.MerchantName, src => src.Merchant!.Name)
-            .Map(dest => dest.Category, src => src.Category!.Name);
+            .Map(dest => dest.ReservationsCount, src => src.Reservations.Count);
 
         TypeAdapterConfig<UpdateOfferDto, Offer>.NewConfig()
             .Ignore(dest => dest.Created);

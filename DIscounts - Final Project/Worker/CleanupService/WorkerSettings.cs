@@ -2,5 +2,5 @@
 
 internal class WorkerSettings
 {
-    public int CleanupIntervalMinutes { get; set; } = 30;
+    public ushort CleanupIntervalMinutes { get; set; } = 15;
 }

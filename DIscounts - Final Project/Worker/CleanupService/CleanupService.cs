@@ -43,7 +43,7 @@ internal class BackgroundWorker : BackgroundService
                 _logger.LogError(ex, "Cleanup error.");
             }
 
-            await Task.Delay(TimeSpan.FromMinutes(15), stoppingToken).ConfigureAwait(false);
+            await Task.Delay(TimeSpan.FromMinutes(_settings.CleanupIntervalMinutes), stoppingToken).ConfigureAwait(false);
         }
     }
 }

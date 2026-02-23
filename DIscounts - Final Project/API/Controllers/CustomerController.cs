@@ -54,6 +54,9 @@ public class CustomerController : ControllerBase
     /// <returns>Created customer.</returns>
     /// <response code="201">Customer created successfully.</response>
     [HttpPost]
+    [Authorize(Roles = "Admin")]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] CreateCustomerDto customer, CancellationToken ct)
     {
@@ -102,6 +105,9 @@ public class CustomerController : ControllerBase
     /// <response code="204">Customer deleted successfully.</response>
     /// <response code="404">If the customer is not found.</response>
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin")]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)

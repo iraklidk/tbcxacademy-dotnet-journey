@@ -1,12 +1,10 @@
 ﻿using Mapster;
 using Domain.Entities;
-using Persistence.Identity;
 using Application.DTOs.Offer;
 using Application.DTOs.Merchant;
 using Application.Interfaces.Repos;
 using Application.Interfaces.Services;
 using Discounts.Application.Exceptions;
-using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services;
 

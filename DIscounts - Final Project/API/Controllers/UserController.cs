@@ -11,6 +11,7 @@ namespace Discounts.API.Controllers;
 /// Provides endpoints for managing users.
 /// </summary>
 [ApiController]
+[Authorize(Roles = "Admin")]
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {

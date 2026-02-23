@@ -29,7 +29,7 @@ public class CouponConfiguration : IEntityTypeConfiguration<Coupon>
         builder.HasOne(c => c.Offer)
            .WithMany(o => o.Coupons)
            .HasForeignKey(c => c.OfferId)
-           .OnDelete(DeleteBehavior.NoAction);
+           .OnDelete(DeleteBehavior.SetNull);
 
         builder.HasIndex(c => c.Code)
                .IsUnique();

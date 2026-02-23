@@ -91,6 +91,9 @@ public class AccountController : Controller
     #endregion
 
     [HttpGet]
+    public IActionResult AccessDenied() => View();
+
+    [HttpGet]
     [Authorize]
     public IActionResult Profile()
     {

@@ -53,8 +53,11 @@ public class CategoryController : ControllerBase
     /// <param name="ct">Cancellation token.</param>
     /// <returns>The created category.</returns>
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(400)]
     [ProducesResponseType(typeof(CategoryDto), 201)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [SwaggerResponseExample(201, typeof(CategoryDtoExample))]
     [SwaggerRequestExample(typeof(CreateCategoryDto), typeof(CreateCategoryDtoExample))]
     public async Task<ActionResult<CategoryDto>> Create([FromBody] CreateCategoryDto dto, CancellationToken ct)
@@ -73,9 +76,12 @@ public class CategoryController : ControllerBase
     /// Returns HTTP 400 if the input data is invalid, or HTTP 404 if the category does not exist.
     /// </returns>
     [HttpPut]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [SwaggerRequestExample(typeof(UpdateCategoryDto), typeof(UpdateCategoryDtoExample))]
     public async Task<IActionResult> Update([FromBody] UpdateCategoryDto dto, CancellationToken ct)
     {
@@ -90,8 +96,11 @@ public class CategoryController : ControllerBase
     /// <param name="ct">Cancellation token.</param>
     /// <returns>No content if deletion is successful.</returns>
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)
     {
         await _categoryService.DeleteAsync(id, ct).ConfigureAwait(false);

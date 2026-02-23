@@ -88,6 +88,9 @@ public class MerchantController : ControllerBase
     /// <response code="201">Merchant created successfully</response>
     /// <response code="400">Invalid request</response>
     [HttpPost]
+    [Authorize(Roles = "Merchant, Admin")]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] CreateMerchantDto merchant, CancellationToken ct)
     {
@@ -102,6 +105,9 @@ public class MerchantController : ControllerBase
     /// <param name="ct">Cancellation token</param>
     /// <response code="204">Merchant updated successfully</response>
     [HttpPut]
+    [Authorize(Roles = "Merchant, Admin")]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Update([FromBody] UpdateMerchantDto merchant, CancellationToken ct)
     {
@@ -117,6 +123,9 @@ public class MerchantController : ControllerBase
     /// <response code="204">Merchant deleted successfully</response>
     /// <response code="404">Merchant not found</response>
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin")]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)

@@ -3,7 +3,6 @@ using System.Data;
 using Domain.Entities;
 using Persistence.Identity;
 using Application.DTOs.Auth;
-using Application.DTOs.User;
 using Application.Interfaces;
 using Application.DTOs.Customer;
 using Application.DTOs.Merchant;

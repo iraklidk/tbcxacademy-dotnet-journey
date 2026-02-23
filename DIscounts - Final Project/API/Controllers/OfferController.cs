@@ -55,8 +55,11 @@ public class OfferController : ControllerBase
     /// <param name="ct">Cancellation token.</param>
     /// <returns>The created offer.</returns>
     [HttpPost]
-    [ProducesResponseType(typeof(OfferDto), 201)]
+    [Authorize(Roles = "Merchant")]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(400)]
+    [ProducesResponseType(typeof(OfferDto), 201)]
     public async Task<IActionResult> Create([FromBody] CreateOfferDto dto, CancellationToken ct)
     {
         var createdOffer = await _offerService.CreateOfferAsync(dto, ct).ConfigureAwait(false);
@@ -70,9 +73,12 @@ public class OfferController : ControllerBase
     /// <param name="ct">Cancellation token.</param>
     /// <returns>No content if update is successful.</returns>
     [HttpPut]
+    [Authorize(Roles = "Merchant")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Update([FromBody] UpdateOfferDto dto, CancellationToken ct)
     {
         await _offerService.UpdateOfferAsync(dto, ct).ConfigureAwait(false);
@@ -86,8 +92,11 @@ public class OfferController : ControllerBase
     /// <param name="ct">Cancellation token.</param>
     /// <returns>No content if deletion is successful.</returns>
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Merchant")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)
     {
         await _offerService.DeleteOfferAsync(id, ct).ConfigureAwait(false);
