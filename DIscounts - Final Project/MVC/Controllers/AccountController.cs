@@ -1,29 +1,18 @@
 ﻿using Mapster;
 using MVC.Models.Merchant;
 using MVC.Models.Customer;
-using Persistence.Identity;
 using Application.DTOs.Auth;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
 using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 
 public class AccountController : Controller
 {
     private readonly IAuthService _authService;
-    private readonly UserManager<User> _userManager;
-    private readonly SignInManager<User> _signInManager;
 
-    public AccountController(IAuthService authService,
-                             UserManager<User> userManager,
-                             SignInManager<User> signInManager)
-    {
-        _userManager = userManager;
-        _authService = authService;
-        _signInManager = signInManager;
-    }
+    public AccountController(IAuthService authService) => _authService = authService;
 
-    #region Auth&Register
+    #region Auth&Register&Forgotpassword
     [HttpGet]
     public IActionResult Register() => View();
 
@@ -56,7 +45,7 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Logout()
     {
-        await _signInManager.SignOutAsync().ConfigureAwait(false);
+        await _authService.LogoutAsync().ConfigureAwait(false);
         return RedirectToAction("Index", "Home");
     }
 

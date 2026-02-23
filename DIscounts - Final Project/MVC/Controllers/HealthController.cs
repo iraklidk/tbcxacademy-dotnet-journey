@@ -18,8 +18,7 @@ public class HealthController : Controller
         var model = report.Entries.Select(entry => new HealthCheckViewModel
         {
             Name = entry.Key,
-            Status = entry.Value.Status.ToString(),
-            Description = entry.Value.Description
+            Status = entry.Value.Status.ToString()
         }).ToList();
 
         ViewBag.OverallStatus = report.Status.ToString();

@@ -35,6 +35,18 @@ public class AuthController : ControllerBase
     }
 
     /// <summary>
+    /// Logs out the current user.
+    /// </summary>
+    /// <returns>A message confirming logout.</returns>
+    [HttpPost("logout")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> Logout()
+    {
+        await _authService.LogoutAsync().ConfigureAwait(false);
+        return Ok(new { message = "Logged out successfully" });
+    }
+
+    /// <summary>
     /// Register a new user account.
     /// </summary>
     /// <param name="request">User registration details.</param>

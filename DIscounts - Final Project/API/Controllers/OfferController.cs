@@ -15,6 +15,7 @@ namespace API.Controllers;
 public class OfferController : ControllerBase
 {
     private readonly IOfferService _offerService;
+
     public OfferController(IOfferService offerService) => _offerService = offerService;
 
     /// <summary>
@@ -49,6 +50,19 @@ public class OfferController : ControllerBase
     }
 
     /// <summary>
+    /// Retrieves all pending offers.
+    /// </summary>
+    /// <param name="ct">Optional cancellation token.</param>
+    /// <returns>List of pending offers.</returns>
+    [HttpGet("pendings")]
+    [ProducesResponseType(typeof(IEnumerable<OfferDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetPendingsAsync(CancellationToken ct = default)
+    {
+        var pendingOffers = await _offerService.GetPendingsAsync(ct).ConfigureAwait(false);
+        return Ok(pendingOffers);
+    }
+
+    /// <summary>
     /// Create a new offer.
     /// </summary>
     /// <param name="dto">Offer creation details.</param>
@@ -64,6 +78,22 @@ public class OfferController : ControllerBase
     {
         var createdOffer = await _offerService.CreateOfferAsync(dto, ct).ConfigureAwait(false);
         return CreatedAtAction(nameof(GetById), new { id = createdOffer.Id }, createdOffer);
+    }
+
+    /// <summary>
+    /// Updates the remaining coupon count for a specific offer.
+    /// </summary>
+    /// <param name="offerId">The ID of the offer to update.</param>
+    /// <param name="count">The number of coupons to change (default is 1).</param>
+    /// <param name="ct">Optional cancellation token.</param>
+    /// <returns>Returns HTTP 204 No Content if successful.</returns>
+    [HttpPost("{offerId}/change-coupons")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ChangeRemainingCouponsAsync(int offerId, int count = 1, CancellationToken ct = default)
+    {
+        await _offerService.ChangeRemainingCouponsAsync(offerId, count, ct).ConfigureAwait(false);
+        return NoContent();
     }
 
     /// <summary>

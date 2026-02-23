@@ -47,6 +47,8 @@ public class AuthService : IAuthService
         return new LoginResponse { UserName = user.UserName, UserId = user.Id };
     }
 
+    public Task LogoutAsync() => _signInManager.SignOutAsync();
+
     public async Task<LoginResponse> RegisterAsync(RegisterRequest request, CancellationToken ct = default)
     {
         await _unitOfWork.BeginTransactionAsync(ct).ConfigureAwait(false);
