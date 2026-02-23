@@ -1,6 +1,5 @@
 ﻿using Mapster;
 using Domain.Entities;
-using Domain.Constants;
 using Application.Interfaces;
 using Application.DTOs.Coupon;
 using Application.Interfaces.Repos;

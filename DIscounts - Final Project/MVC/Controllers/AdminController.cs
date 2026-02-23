@@ -135,10 +135,10 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> UpdateStatus(UpdateOfferStatusDto viewModel, CancellationToken ct = default)
+    public async Task<IActionResult> UpdateStatus(UpdateOfferStatusDto viewModel, bool fromDetailsPage, CancellationToken ct = default)
     {
         await _offerService.UpdateStatusAsync(viewModel, ct).ConfigureAwait(false);
-        return RedirectToAction(nameof(DiscountsPending));
+        return fromDetailsPage ? RedirectToAction("OfferDetails", "Details", new { id = viewModel.Id }) : RedirectToAction(nameof(DiscountsPending));
     }
     #endregion
 

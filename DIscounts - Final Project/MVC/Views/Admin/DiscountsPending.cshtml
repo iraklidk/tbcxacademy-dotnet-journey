@@ -46,6 +46,7 @@
 
                                                 <form asp-controller="Admin" asp-action="UpdateStatus" method="post" class="flex-form">
                                                     @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="fromDetailsPage" value="false" />
                                                     <input type="hidden" name="Id" value="@offer.Id" />
                                                     <input type="hidden" name="Status" value="@OfferStatus.Approved" />
                                                     <button type="submit" class="action_btn approve_btn status-update-btn">
@@ -55,6 +56,7 @@
 
                                                 <form asp-controller="Admin" asp-action="UpdateStatus" method="post" class="flex-form">
                                                     @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="fromDetailsPage" value="false" />
                                                     <input type="hidden" name="Id" value="@offer.Id" />
                                                     <input type="hidden" name="Status" value="@OfferStatus.Rejected" />
                                                     <button type="submit" class="action_btn reject_btn status-update-btn">

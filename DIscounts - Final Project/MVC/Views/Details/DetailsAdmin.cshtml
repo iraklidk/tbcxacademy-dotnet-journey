@@ -76,6 +76,7 @@
                 {
                     <form asp-controller="Admin" asp-action="UpdateStatus" method="post">
                         @Html.AntiForgeryToken()
+                        <input type="hidden" name="fromDetailsPage" value="true" />
                         <input type="hidden" name="Id" value="@Model.Id" />
                         <input type="hidden" name="Status" value="@OfferStatus.Approved" />
 
@@ -86,6 +87,7 @@
 
                     <form asp-controller="Admin" asp-action="UpdateStatus" method="post">
                         @Html.AntiForgeryToken()
+                        <input type="hidden" name="fromDetailsPage" value="true" />
                         <input type="hidden" name="Id" value="@Model.Id" />
                         <input type="hidden" name="Status" value="@OfferStatus.Rejected" />
 

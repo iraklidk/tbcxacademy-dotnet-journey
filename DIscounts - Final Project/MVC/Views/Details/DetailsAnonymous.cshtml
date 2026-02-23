@@ -67,21 +67,11 @@
             }
             else
             {
-                @if (!isLoggedIn)
+                @if (!isLoggedIn && Model.Status == OfferStatus.Approved)
                 {
                     <a asp-controller="Account" asp-action="Login" class="btn btn_buy">
                         🔐 Log In to Buy
                     </a>
-                }
-                else
-                {
-                    <form asp-controller="Customer" asp-action="Buy" method="post">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="offerId" value="@Model.Id" />
-                        <button type="submit" class="btn btn_buy">
-                            <span class="btn_icon">🛍️</span> Buy Coupon
-                        </button>
-                    </form>
                 }
             }
         </div>

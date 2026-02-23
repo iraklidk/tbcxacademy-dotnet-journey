@@ -74,7 +74,6 @@ public class CustomerServiceTests
     public async Task GetCustomerByUserIdAsync_ShouldThrowNotFound_WhenUserExistsInIdentityButNotCustomersTable()
     {
         // Arrange
-        var userId = 10;
         _userManagerMock.Setup(u => u.FindByIdAsync("10")).ReturnsAsync(new User { Id = 10 });
         _customerRepoMock.Setup(r => r.GetCustomerByUserIdAsync(10, It.IsAny<CancellationToken>()))
             .ReturnsAsync((Customer?)null);

@@ -98,12 +98,9 @@ public class ReservationService : IReservationService
 
     public async Task DeleteReservationAsync(int id, CancellationToken ct)
     {
-        await _unitOfWork.BeginTransactionAsync(ct).ConfigureAwait(false);
         var reservation = await _reservationRepository.GetByIdAsync(id, ct).ConfigureAwait(false);
         if (reservation == null) throw new NotFoundException($"Reservation with Id {id} not found!");
         await _reservationRepository.DeleteAsync(reservation, ct).ConfigureAwait(false);
-        await _offerRepository.ChangeRemainingCouponsAsync(reservation.OfferId, 1, ct).ConfigureAwait(false);
-        await _unitOfWork.CommitAsync(ct).ConfigureAwait(false);
     }
 
     public Task<bool> ExistsActiveAsync(int offerId, int customerId, CancellationToken ct = default)
