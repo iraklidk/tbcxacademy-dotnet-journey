@@ -8,23 +8,22 @@ namespace Worker.CleanupService;
 
 internal class BackgroundWorker : BackgroundService
 {
-    private readonly IServiceScopeFactory _scopeFactory;
-    private readonly ILogger<BackgroundWorker> _logger;
     private readonly WorkerSettings _settings;
+    private readonly ILogger<BackgroundWorker> _logger;
+    private readonly IServiceScopeFactory _scopeFactory;
 
-    public BackgroundWorker(
-        IServiceScopeFactory scopeFactory,
-        ILogger<BackgroundWorker> logger,
-        IOptions<WorkerSettings> options)
+    public BackgroundWorker(IOptions<WorkerSettings> options,
+                            ILogger<BackgroundWorker> logger,
+                            IServiceScopeFactory scopeFactory)
     {
-        _scopeFactory = scopeFactory;
-        _settings = options.Value;
         _logger = logger;
+        _settings = options.Value;
+        _scopeFactory = scopeFactory;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("Expired Cleanup Worker started.");
+        _logger.LogInformation("Cleanup Worker started.");
 
         while (!stoppingToken.IsCancellationRequested)
         {

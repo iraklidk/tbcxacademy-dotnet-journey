@@ -78,8 +78,6 @@ public class AdminController : Controller
     {
         var updateDto = model.Adapt<UpdateGlobalSettingsDto>();
         await _globalSettingsService.UpdateSettingsAsync(updateDto, ct).ConfigureAwait(false);
-        TempData["SuccessMessage"] = "Settings updated successfully!";
-        //return RedirectToAction("Settings", "Admin");
         return View();
     }
     #endregion

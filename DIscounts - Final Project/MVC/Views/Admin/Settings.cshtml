@@ -4,21 +4,6 @@
 }
 
 <section class="home show">
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="success_overlay">
-            <div class="success_card">
-                <div class="success_icon">
-                    <div class="check_mark"></div>
-                </div>
-                <h3 class="success_title">Settings Updated</h3>
-                <p class="success_text">@TempData["SuccessMessage"]</p>
-                <button class="btn btn_close_success" onclick="this.parentElement.parentElement.remove()">
-                    Got it!
-                </button>
-            </div>
-        </div>
-    }
     <div class="dashboard_center_container">
         <div class="form_container admin_dashboard">
 
@@ -140,106 +125,6 @@
 </script>
 
 <style>
-    .success_overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(8px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        animation: fadeIn 0.4s ease-out;
-    }
-
-    .success_card {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        padding: 40px;
-        border-radius: 24px;
-        text-align: center;
-        max-width: 400px;
-        width: 90%;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        transform: scale(0.9);
-        animation: popIn 0.5s cubic-bezier(0.26, 0.53, 0.74, 1.48) forwards;
-    }
-
-    .success_icon {
-        width: 80px;
-        height: 80px;
-        background: #10b981;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px;
-        box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-    }
-
-    .check_mark {
-        width: 40px;
-        height: 20px;
-        border-left: 5px solid white;
-        border-bottom: 5px solid white;
-        transform: rotate(-45deg);
-        margin-top: -5px;
-    }
-
-    .success_title {
-        font-size: 24px;
-        font-weight: 700;
-        margin-bottom: 10px;
-        color: #fff;
-    }
-
-    .success_text {
-        color: #ccc;
-        margin-bottom: 25px;
-        font-size: 15px;
-    }
-
-    .btn_close_success {
-        background: #fff;
-        color: #1a1a2e;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 12px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-        .btn_close_success:hover {
-            background: #00d2ff;
-            color: white;
-        }
-
-    @@keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-
-        to {
-            opacity: 1;
-        }
-    }
-
-    @@keyframes popIn {
-        from {
-            transform: scale(0.8);
-            opacity: 0;
-        }
-
-        to {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-
     .section_title {
         text-align: center;
         margin-bottom: 35px;
