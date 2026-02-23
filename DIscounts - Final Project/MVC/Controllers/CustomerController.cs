@@ -39,13 +39,9 @@ public class CustomerController : Controller
         var offers = await _offerService.GetAllWithCategoryNamesAsync(ct).ConfigureAwait(false);
         var categories = await _categoryService.GetAllAsync(ct).ConfigureAwait(false);
         ViewBag.Categories = categories;
-
         var filteredOffers = offers.Where(o => o.Status == OfferStatus.Approved || o.Status == OfferStatus.Expired);
-
         if (!string.IsNullOrEmpty(searchTerm)) filteredOffers = offers.Where(o => o.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
-
         if (categoryId.HasValue && categoryId.Value != 0) offers = offers.Where(o => o.CategoryId == categoryId.Value);
-        
         var offerViewModels = filteredOffers.Adapt<IEnumerable<OfferViewModel>>().ToList();
         ViewBag.Categories = categories;
         return View(offers.Adapt<IEnumerable<OfferViewModel>>());
