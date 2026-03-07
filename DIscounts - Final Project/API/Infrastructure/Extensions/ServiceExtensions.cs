@@ -14,8 +14,23 @@ public static class ServiceExtensions
         services.AddSwaggerGen();
         services.AddSwaggerExamplesFromAssemblyOf<Program>();
         AddCustomRateLimiting(services);
+        services.AddCorsServices();
         services.RegisterMaps();
         services.AddMapster();
+    }
+
+    public static void AddCorsServices(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowWebApp",
+                policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+        });
     }
 
     public static void AddCustomRateLimiting(this IServiceCollection services)

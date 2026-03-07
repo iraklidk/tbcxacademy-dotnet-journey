@@ -2,13 +2,13 @@
 {
     public static async Task<WebApplication> RegisterMiddlewares(this WebApplication app)
     {
-        app.AddHealthCheck();
         app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+        app.AddHealthCheck();
         app.UseVersionedSwaggerUI();
-        app.UseCors("AllowWebApp");
-        // app.UseRateLimiter();
+        app.UseRateLimiter();
         app.UseHttpsRedirection();
         app.UseRouting();
+        app.UseCors("AllowWebApp");
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
